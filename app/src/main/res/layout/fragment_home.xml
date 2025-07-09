@@ -1,0 +1,481 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 제목 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weekly Progress"
+            android:textSize="20sp"
+            android:padding="6dp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 카드형 그래프 박스 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_card"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp">
+
+            <!-- Most Active 텍스트 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Most Active: Friday"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="12dp" />
+
+            <!-- 중앙선 + 막대들 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="7"
+                android:gravity="center_vertical">
+
+                <!-- 요일별 막대 예시 (Mon) -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
+
+                    <!-- 상단 빈 공간 -->
+                    <View
+                        android:layout_width="12dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:background="@android:color/transparent" />
+
+
+                    <!-- 활동량 막대 -->
+                    <View
+                        android:layout_width="12dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:background="#B0B0B0" />
+                    <!-- 요일 텍스트 -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mon"
+                        android:textSize="12sp"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+                <!-- Tue ~ Sun: 구조 동일, 높이만 weight 조절 -->
+                <!-- Tue -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
+
+                    <View android:layout_width="12dp" android:layout_height="0dp" android:layout_weight="1.5" android:background="@android:color/transparent"/>
+                    <View android:layout_width="12dp" android:layout_height="0dp" android:layout_weight="2.5" android:background="#B0B0B0"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tue" android:textSize="12sp" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+                <!-- Wed -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal">
+                    <View android:layout_width="12dp" android:layout_height="0dp" android:layout_weight="3" android:background="@android:color/transparent"/>
+                    <View android:layout_width="12dp" android:layout_height="0dp" android:layout_weight="1" android:background="#B0B0B0"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wed" android:textSize="12sp" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+                <!-- Thu -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal">
+                    <View android:layout_width="12dp" android:layout_height="0dp" android:layout_weight="1.5" android:background="@android:color/transparent"/>
+                    <View android:layout_width="12dp" android:layout_height="0dp" android:layout_weight="2.5" android:background="#B0B0B0"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Thu" android:textSize="12sp" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+                <!-- Fri -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal">
+                    <View android:layout_width="12dp" android:layout_height="0dp" android:layout_weight="1" android:background="@android:color/transparent"/>
+                    <View android:layout_width="12dp" android:layout_height="0dp" android:layout_weight="3" android:background="#000000"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Fri" android:textSize="12sp" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+                <!-- Sat -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal">
+                    <View android:layout_width="12dp" android:layout_height="0dp" android:layout_weight="1.5" android:background="@android:color/transparent"/>
+                    <View android:layout_width="12dp" android:layout_height="0dp" android:layout_weight="2.5" android:background="#B0B0B0"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sat" android:textSize="12sp" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+                <!-- Sun -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal">
+                    <View android:layout_width="12dp" android:layout_height="0dp" android:layout_weight="2.2" android:background="@android:color/transparent"/>
+                    <View android:layout_width="12dp" android:layout_height="0dp" android:layout_weight="1.8" android:background="#B0B0B0"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sun" android:textSize="12sp" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 글귀 예시 카드 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="#FAFAFA"
+            android:layout_marginBottom="12dp"
+            android:elevation="1dp">
+
+            <!-- 왼쪽 박스 -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="#EEEEEE"
+                android:layout_marginEnd="12dp" />
+
+            <!-- 텍스트 내용 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="오늘의 글귀"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="하루의 시작은 스트레칭으로! 몸을 깨워보세요."
+                    android:textSize="14sp"
+                    android:textColor="#333333"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- 시간 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3h ago"
+                android:textSize="12sp"
+                android:textColor="#888888"
+                android:layout_gravity="top" />
+        </LinearLayout><!-- 글귀 예시 카드 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="#FAFAFA"
+            android:layout_marginBottom="12dp"
+            android:elevation="1dp">
+
+            <!-- 왼쪽 박스 -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="#EEEEEE"
+                android:layout_marginEnd="12dp" />
+
+            <!-- 텍스트 내용 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="오늘의 글귀"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="하루의 시작은 스트레칭으로! 몸을 깨워보세요."
+                    android:textSize="14sp"
+                    android:textColor="#333333"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- 시간 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3h ago"
+                android:textSize="12sp"
+                android:textColor="#888888"
+                android:layout_gravity="top" />
+        </LinearLayout><!-- 글귀 예시 카드 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="#FAFAFA"
+            android:layout_marginBottom="12dp"
+            android:elevation="1dp">
+
+            <!-- 왼쪽 박스 -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="#EEEEEE"
+                android:layout_marginEnd="12dp" />
+
+            <!-- 텍스트 내용 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="오늘의 글귀"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="하루의 시작은 스트레칭으로! 몸을 깨워보세요."
+                    android:textSize="14sp"
+                    android:textColor="#333333"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- 시간 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3h ago"
+                android:textSize="12sp"
+                android:textColor="#888888"
+                android:layout_gravity="top" />
+        </LinearLayout><!-- 글귀 예시 카드 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="#FAFAFA"
+            android:layout_marginBottom="12dp"
+            android:elevation="1dp">
+
+            <!-- 왼쪽 박스 -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="#EEEEEE"
+                android:layout_marginEnd="12dp" />
+
+            <!-- 텍스트 내용 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="오늘의 글귀"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="하루의 시작은 스트레칭으로! 몸을 깨워보세요."
+                    android:textSize="14sp"
+                    android:textColor="#333333"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- 시간 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3h ago"
+                android:textSize="12sp"
+                android:textColor="#888888"
+                android:layout_gravity="top" />
+        </LinearLayout><!-- 글귀 예시 카드 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="#FAFAFA"
+            android:layout_marginBottom="12dp"
+            android:elevation="1dp">
+
+            <!-- 왼쪽 박스 -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="#EEEEEE"
+                android:layout_marginEnd="12dp" />
+
+            <!-- 텍스트 내용 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="오늘의 글귀"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="하루의 시작은 스트레칭으로! 몸을 깨워보세요."
+                    android:textSize="14sp"
+                    android:textColor="#333333"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- 시간 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3h ago"
+                android:textSize="12sp"
+                android:textColor="#888888"
+                android:layout_gravity="top" />
+        </LinearLayout><!-- 글귀 예시 카드 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="#FAFAFA"
+            android:layout_marginBottom="12dp"
+            android:elevation="1dp">
+
+            <!-- 왼쪽 박스 -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="#EEEEEE"
+                android:layout_marginEnd="12dp" />
+
+            <!-- 텍스트 내용 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="오늘의 글귀"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="하루의 시작은 스트레칭으로! 몸을 깨워보세요."
+                    android:textSize="14sp"
+                    android:textColor="#333333"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- 시간 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3h ago"
+                android:textSize="12sp"
+                android:textColor="#888888"
+                android:layout_gravity="top" />
+        </LinearLayout><!-- 글귀 예시 카드 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="#FAFAFA"
+            android:layout_marginBottom="12dp"
+            android:elevation="1dp">
+
+            <!-- 왼쪽 박스 -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="#EEEEEE"
+                android:layout_marginEnd="12dp" />
+
+            <!-- 텍스트 내용 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="오늘의 글귀"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="하루의 시작은 스트레칭으로! 몸을 깨워보세요."
+                    android:textSize="14sp"
+                    android:textColor="#333333"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- 시간 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3h ago"
+                android:textSize="12sp"
+                android:textColor="#888888"
+                android:layout_gravity="top" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</ScrollView>
