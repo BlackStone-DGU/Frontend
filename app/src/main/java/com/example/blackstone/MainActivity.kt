@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity() {
         val fragment = when (menuId) {
             R.id.menu_home -> HomeFragment()
             R.id.menu_health -> HealthFragment()
-            R.id.menu_mypage -> MyPageFragment()
+            R.id.menu_ranking -> RankingFragment()
+            R.id.menu_shopping -> ShoppingFragment()
             else -> HomeFragment()
         }
 
