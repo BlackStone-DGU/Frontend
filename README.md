@@ -71,24 +71,6 @@
 - 리뷰 시 유의해야 할 사항
 ```
 
-
-### 💡 Issue 템플릿
-
-```txt
-타입: 이슈 제목
-
-## 이슈 개요
-- 어떤 작업인지 간략히 설명해주세요.
-
-## 작업 항목
-- [ ] 작업 1
-- [ ] 작업 2
-- [ ] 작업 3
-
-## 참고 자료
-- 관련 문서, 디자인, 링크 등
-```
-
 ---
 
 ## 🧑‍💻 Code Style
@@ -119,6 +101,6 @@
 | min SDK | 28 |
 | target SDK | 35 |
 | IDE | Android Studio Meerkat (2024.3.1) |
-| 테스트 기기 | Emulator : Medium Phone API 36 |
+| 테스트 기기 | Emulator : Medium Phone API 35 |
 
 ---
