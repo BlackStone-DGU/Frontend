@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomNavigationView.itemIconTintList = null
         selectTab(R.id.menu_home)
         binding.bottomNavigationView.setOnItemSelectedListener {
             selectTab(it.itemId)
@@ -25,7 +24,8 @@ class MainActivity : AppCompatActivity() {
         val fragment = when (menuId) {
             R.id.menu_home -> HomeFragment()
             R.id.menu_health -> HealthFragment()
-            R.id.menu_mypage -> MyPageFragment()
+            R.id.menu_ranking -> RankingFragment()
+            R.id.menu_shopping -> ShoppingFragment()
             else -> HomeFragment()
         }
 

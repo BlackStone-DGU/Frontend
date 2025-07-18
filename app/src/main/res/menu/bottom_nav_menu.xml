@@ -2,14 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_home"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_nav_home"
         android:title="Home" />
     <item
         android:id="@+id/menu_health"
-        android:icon="@drawable/ic_health"
+        android:icon="@drawable/ic_nav_health"
         android:title="Health" />
     <item
-        android:id="@+id/menu_mypage"
-        android:icon="@drawable/ic_mypage"
-        android:title="MyPage" />
+        android:id="@+id/menu_ranking"
+        android:icon="@drawable/ic_nav_ranking"
+        android:title="Ranking" />
+    <item
+        android:id="@+id/menu_shopping"
+        android:icon="@drawable/ic_nav_shopping"
+        android:title="Shopping" />
 </menu>
