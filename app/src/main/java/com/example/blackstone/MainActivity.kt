@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomNavigationView.itemIconTintList = null
         selectTab(R.id.menu_home)
         binding.bottomNavigationView.setOnItemSelectedListener {
             selectTab(it.itemId)
