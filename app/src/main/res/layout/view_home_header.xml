@@ -8,7 +8,6 @@
     android:paddingTop="18dp"
     android:paddingHorizontal="15dp">
 
-    <!-- 왼쪽 텍스트 영역 -->
     <TextView
         android:id="@+id/tvHeaderTitle"
         android:layout_width="wrap_content"
@@ -35,14 +34,13 @@
         app:layout_constraintStart_toStartOf="@id/tvHeaderTitle"
         app:layout_constraintTop_toBottomOf="@id/tvHeaderTitle" />
 
-    <!-- 오른쪽 달리는 사람 아이콘 -->
     <ImageView
-        android:layout_marginStart="8dp"
         android:id="@+id/ivHeaderIcon"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@drawable/ic_run"
-
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvDday"
         app:layout_constraintTop_toTopOf="parent" />
