@@ -52,4 +52,19 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    
+    // 카메라 사용 라이브러리
+    val camerax_version = "1.3.3"
+    implementation("androidx.camera:camera-core:$camerax_version")
+    implementation("androidx.camera:camera-camera2:$camerax_version")
+    implementation("androidx.camera:camera-lifecycle:$camerax_version")
+    implementation("androidx.camera:camera-view:$camerax_version")
+    
+    // 최신 권한 요청 라이브러리
+    implementation("androidx.activity:activity-ktx:1.9.0")
+    
+    // ml-kit:pose-detection 라이브러리
+    val mlkit_version = "18.0.0-beta5"
+    implementation("com.google.mlkit:pose-detection:$mlkit_version")
+    implementation("com.google.mlkit:pose-detection-accurate:$mlkit_version")
 }
