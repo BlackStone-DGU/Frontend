@@ -1,4 +1,4 @@
-package com.example.blackstone;
+package com.example.blackstone.health;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -24,6 +24,7 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.blackstone.R;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.pose.PoseDetection;
