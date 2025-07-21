@@ -50,11 +50,11 @@
                 android:id="@+id/tvMissionProgress1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3/5 SET"
+                android:text="0/0 SET"
                 android:textColor="@color/WinnerFit_black"
                 android:textSize="13sp"
                 android:fontFamily="@font/poppins_bold"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="5dp" />
         </LinearLayout>
 
         <!-- 미션 아이템 2 -->
@@ -76,7 +76,7 @@
                 android:id="@+id/tvMissionProgress2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3/5 SET"
+                android:text="0/0 SET"
                 android:textColor="@color/WinnerFit_black"
                 android:textSize="13sp"
                 android:fontFamily="@font/poppins_bold"
@@ -102,7 +102,7 @@
                 android:id="@+id/tvMissionProgress3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3/5 SET"
+                android:text="0/0 SET"
                 android:textColor="@color/WinnerFit_black"
                 android:textSize="13sp"
                 android:fontFamily="@font/poppins_bold"
@@ -128,7 +128,7 @@
                 android:id="@+id/tvMissionProgress4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3/5 SET"
+                android:text="0/0 SET"
                 android:textColor="@color/WinnerFit_black"
                 android:textSize="13sp"
                 android:fontFamily="@font/poppins_bold"

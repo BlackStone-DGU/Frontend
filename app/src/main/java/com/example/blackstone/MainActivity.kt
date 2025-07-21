@@ -1,12 +1,13 @@
 package com.example.blackstone
 
+import HomeFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.blackstone.databinding.ActivityMainBinding
 import com.example.blackstone.health.HealthFragment
-import com.example.blackstone.home.HomeFragment
 import com.example.blackstone.ranking.RankingFragment
 import com.example.blackstone.shopping.ShoppingFragment
+
 
 class MainActivity : AppCompatActivity() {
 
