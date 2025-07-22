@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@color/WinnerFit_black">
+
+    <!-- 섹션 제목 -->
+    <TextView
+        android:id="@+id/tvMissionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="오늘의 미션"
+        android:textColor="@color/WinnerFit_yellow"
+        android:textSize="17sp"
+        android:fontFamily="@font/poppins_bold" />
+
+    <!-- 미션 박스 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/bg_mission_box"
+        android:paddingHorizontal="14dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:divider="@android:color/transparent"
+        android:showDividers="middle"
+        android:dividerPadding="8dp">
+
+        <!-- 미션 아이템 1 -->
+        <LinearLayout
+            android:id="@+id/missionItem1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivMissionIcon1"
+                android:layout_width="67dp"
+                android:layout_height="67dp"
+                android:src="@drawable/ic_run_mission" />
+
+            <TextView
+                android:id="@+id/tvMissionProgress1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0/0 SET"
+                android:textColor="@color/WinnerFit_black"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_marginTop="5dp" />
+        </LinearLayout>
+
+        <!-- 미션 아이템 2 -->
+        <LinearLayout
+            android:id="@+id/missionItem2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivMissionIcon2"
+                android:layout_width="67dp"
+                android:layout_height="67dp"
+                android:src="@drawable/ic_run_mission" />
+
+            <TextView
+                android:id="@+id/tvMissionProgress2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0/0 SET"
+                android:textColor="@color/WinnerFit_black"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- 미션 아이템 3 -->
+        <LinearLayout
+            android:id="@+id/missionItem3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivMissionIcon3"
+                android:layout_width="67dp"
+                android:layout_height="67dp"
+                android:src="@drawable/ic_run_mission" />
+
+            <TextView
+                android:id="@+id/tvMissionProgress3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0/0 SET"
+                android:textColor="@color/WinnerFit_black"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- 미션 아이템 4 -->
+        <LinearLayout
+            android:id="@+id/missionItem4"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivMissionIcon4"
+                android:layout_width="67dp"
+                android:layout_height="67dp"
+                android:src="@drawable/ic_run_mission" />
+
+            <TextView
+                android:id="@+id/tvMissionProgress4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0/0 SET"
+                android:textColor="@color/WinnerFit_black"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

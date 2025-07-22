@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 그림자 레이어 -->
+    <item android:right="2dp" android:left="2dp" android:top="2dp" android:bottom="2dp">
+        <shape android:shape="oval">
+            <solid android:color="#33000000" /> <!-- 그림자 색 -->
+        </shape>
+    </item>
+
+    <!-- 실제 배경 원 -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/WinnerFit_black" />
+        </shape>
+    </item>
+</layer-list>
