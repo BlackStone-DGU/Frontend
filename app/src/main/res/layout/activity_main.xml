@@ -32,7 +32,7 @@
                 android:layout_marginTop="3dp"
                 android:textSize="20sp"
                 android:fontFamily="@font/poppins_bold"
-                android:textColor="@color/WinnerFit_deepPurple" />
+                android:textColor="@color/WinnerFit_purple" />
 
             <ImageView
                 android:id="@+id/toolbarProfile"

@@ -5,6 +5,11 @@
 
     <color name="WinnerFit_black">#212020</color>
     <color name="WinnerFit_yellow">#E2F163</color>
-    <color name="WinnerFit_deepPurple">#896CFE</color>
+
+    <color name="WinnerFit_purple">#896CFE</color>
     <color name="WinnerFit_lightPurple">#B3A0FF</color>
+
+    <color name="WinnerFit_gray">#767676</color>
+    <color name="WinnerFit_lightGray">#D9D9D9</color>
+
 </resources>
