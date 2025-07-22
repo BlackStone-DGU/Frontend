@@ -15,17 +15,31 @@ import java.util.List;
 public class OverlayView extends View {
 
     private Pose latestPose = null;
-    private final Paint pointPaint;
+    private final Paint pointPaint, textPaint;
     private int sourceImageWidth = 1;
     private int sourceImageHeight = 1;
     private boolean isFrontFacing = false;
     private final Matrix transformationMatrix = new Matrix();
+
+    private double angle = -1f;
+    private int count = 0;
+    private int statusCode = 0;
+    private String status[] = {"DOWN","UP"};
+    String exName = "squat";
+    double upThreshold = 160f;
+    double downThreshold = 70f;
+    String angleName[] = {"RightKnee", "LeftKnee"};
 
     public OverlayView(Context context){
         super(context);
         pointPaint = new Paint();
         pointPaint.setColor(Color.GREEN);
         pointPaint.setStrokeWidth(20f);
+
+        textPaint = new Paint();
+        textPaint.setColor(Color.WHITE);
+        textPaint.setTextSize(80f);
+        textPaint.setShadowLayer(5.0f,0f,0f,Color.BLACK);
     }
 
     public void setCameraFacing(boolean isFront) {
@@ -37,7 +51,50 @@ public class OverlayView extends View {
         sourceImageWidth = imageWidth;
         sourceImageHeight = imageHeight;
 
+        angle = pose==null?-1:calculateAngles(pose);
+
         invalidate();
+    }
+
+    private double getAngle(PoseLandmark aPoint, PoseLandmark midPoint, PoseLandmark bPoint){
+        if(aPoint==null||midPoint==null||bPoint==null) return -1f;
+
+        double res = Math.toDegrees(
+                Math.atan2(bPoint.getPosition().y-midPoint.getPosition().y,
+                        bPoint.getPosition().x-midPoint.getPosition().x)
+                        -
+                        Math.atan2(aPoint.getPosition().y-midPoint.getPosition().y,
+                                aPoint.getPosition().x-midPoint.getPosition().x)
+        );
+
+        res = Math.abs(res);
+        if(res>180)
+            res = 360-res;
+
+        return res;
+    }
+
+
+    private double calculateAngles(Pose pose){
+        PoseLandmark aPoint = null, midPoint =null, bPoint = null;
+        for(String ang : angleName){
+            switch(ang){
+                case "RightKnee" :
+                    aPoint = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP);
+                    midPoint = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE);
+                    bPoint = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE);
+                    break;
+                case "LeftKnee" :
+                    aPoint = pose.getPoseLandmark(PoseLandmark.LEFT_HIP);
+                    midPoint = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE);
+                    bPoint = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE);
+                    break;
+            }
+            double res = getAngle(aPoint,midPoint,bPoint);
+            if(res!=-1) return res;
+        }
+
+        return -1;
     }
 
     private void updateTransformationMatrix(){
@@ -64,6 +121,21 @@ public class OverlayView extends View {
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
 
+        if(angle!=-1){
+            if(statusCode==0){
+                if(angle<downThreshold)
+                    statusCode = 1;
+            }
+            else{
+                if(angle>upThreshold) {
+                    count++;
+                    statusCode = 0;
+                }
+            }
+        }
+
+        canvas.drawText(angle==-1?"none":status[statusCode],50,100,textPaint);
+        canvas.drawText(""+count,50,200,textPaint);
         if(latestPose==null) return;
 
         updateTransformationMatrix();
