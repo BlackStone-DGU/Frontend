@@ -1,4 +1,7 @@
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.AbsoluteSizeSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +63,7 @@ class HomeFragment : Fragment() {
 
         // 티어 피드 데이터 반영
         val progressPercent = 76
+
         val progressView = view.findViewById<View>(R.id.viewTierProgress)
         val tvTierStatus = view.findViewById<TextView>(R.id.tvTierStatus)
 
@@ -68,7 +72,40 @@ class HomeFragment : Fragment() {
             progressView.layoutParams.width = (fullWidth * (progressPercent / 100f)).toInt()
             progressView.requestLayout()
         }
-
         tvTierStatus.text = "실버까지 남은 단계 ($progressPercent%)"
+
+        // 칼로리 피드 데이터 반영
+        val kcalBurned = 1320
+        updateCalorieResultView(view, kcalBurned)
+    }
+
+    fun updateCalorieResultView(view: View, kcalBurned: Int) {
+        val weightLossKg = kcalBurned / 7700f
+        val roundedLoss = String.format("%.1f", weightLossKg)
+
+        val tvCalorieBurnedText = view.findViewById<TextView>(R.id.tvCalorieBurnedText)
+        val tvWeightLossText = view.findViewById<TextView>(R.id.tvWeightLossText)
+
+        tvCalorieBurnedText.text = "오늘 하루 동안 ${kcalBurned}kcal 소모하여"
+
+        val unit = "kg"
+        val suffix = "를 감량했어요!"
+        val fullText = "$roundedLoss$unit$suffix"
+        val spannable = SpannableString(fullText)
+
+        spannable.setSpan(
+            AbsoluteSizeSpan(60, true),
+            0,
+            roundedLoss.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spannable.setSpan(
+            AbsoluteSizeSpan(30, true),
+            roundedLoss.length,
+            roundedLoss.length + unit.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        tvWeightLossText.text = spannable
     }
 }

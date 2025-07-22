@@ -15,6 +15,7 @@
         <include layout="@layout/view_home_header" />
         <include layout="@layout/view_home_mission" />
         <include layout="@layout/view_home_tier" />
+        <include layout="@layout/view_home_calorie" />
 
         <LinearLayout
             android:id="@+id/infoContainer"

@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
-    android:paddingVertical="10dp"
+    android:paddingVertical="13dp"
     android:background="@color/WinnerFit_black">
 
     <!-- 섹션 제목 -->
