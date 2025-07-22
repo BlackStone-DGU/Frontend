@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -40,9 +41,6 @@ public class HealthFragment extends Fragment {
     private OverlayView overlayView;
     private PoseDetector poseDetector;
     private ExecutorService analysisExecutor;
-    private String exercise[] = {"squat"};
-    private int exCode = 0;
-    private int exerSize = exercise.length;
     private int cam[] = {CameraSelector.LENS_FACING_BACK, CameraSelector.LENS_FACING_FRONT};
     private int camCode = 0;
 
@@ -64,6 +62,7 @@ public class HealthFragment extends Fragment {
         super.onViewCreated(view,savedInstanceState);
         viewFinder = view.findViewById(R.id.viewFinder);
         overlayView = new OverlayView(requireContext());
+        ImageButton switchButton = view.findViewById(R.id.camera_switch_button);
 
         if(view instanceof ViewGroup)
             ((ViewGroup) view).addView(overlayView);
@@ -73,6 +72,11 @@ public class HealthFragment extends Fragment {
                 .setDetectorMode(PoseDetectorOptions.STREAM_MODE)
                 .build();
         poseDetector = PoseDetection.getClient(options);
+
+        switchButton.setOnClickListener(v->{
+            camCode = (camCode+1)%2;
+            startCamera();
+        });
 
         if(allPermissionsGranted())
             startCamera();
