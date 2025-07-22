@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="WinnerFit"
-        android:textColor="@color/WinnerFit_deepPurple"
+        android:textColor="@color/WinnerFit_purple"
         android:fontFamily="@font/poppins_bold"
         android:gravity="center"
         android:textSize="30sp"

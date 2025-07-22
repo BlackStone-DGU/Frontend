@@ -2,6 +2,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -19,7 +20,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 더미 데이터
+        // 더미 데이터 모음
         val dummyMissions = listOf(
             MissionItem("러닝", 5, "KM", "러닝 5km", completed = 3),
             MissionItem("플랭크", 4, "SET", "플랭크 4세트", completed = 2),
@@ -41,7 +42,7 @@ class HomeFragment : Fragment() {
             R.id.ivMissionIcon4
         )
 
-        // 오늘의 미션 데이터 반영
+        // 미션 피드 데이터 반영
         dummyMissions.forEachIndexed { index, mission ->
             if (index < tvProgressIds.size) {
                 val tv = view.findViewById<TextView>(tvProgressIds[index])
@@ -56,5 +57,18 @@ class HomeFragment : Fragment() {
                 iv.alpha = alphaValue
             }
         }
+
+        // 티어 피드 데이터 반영
+        val progressPercent = 76
+        val progressView = view.findViewById<View>(R.id.viewTierProgress)
+        val tvTierStatus = view.findViewById<TextView>(R.id.tvTierStatus)
+
+        progressView.post {
+            val fullWidth = (progressView.parent as View).width
+            progressView.layoutParams.width = (fullWidth * (progressPercent / 100f)).toInt()
+            progressView.requestLayout()
+        }
+
+        tvTierStatus.text = "실버까지 남은 단계 ($progressPercent%)"
     }
 }

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/WinnerFit_deepPurple"
+    android:background="@color/WinnerFit_purple"
     android:paddingTop="18dp"
     android:paddingHorizontal="15dp">
 
