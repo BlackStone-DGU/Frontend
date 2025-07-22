@@ -1,10 +1,11 @@
 package com.example.blackstone
 
+import HealthFragment
 import HomeFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.blackstone.databinding.ActivityMainBinding
-import com.example.blackstone.health.HealthFragment
+import com.example.blackstone.health.MotionCaptureFragment
 import com.example.blackstone.ranking.RankingFragment
 import com.example.blackstone.shopping.ShoppingFragment
 
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_home -> HomeFragment()
             R.id.menu_health -> HealthFragment()
             R.id.menu_ranking -> RankingFragment()
-            R.id.menu_shopping -> ShoppingFragment()
+            R.id.menu_shopping -> MotionCaptureFragment()
             else -> HomeFragment()
         }
 
