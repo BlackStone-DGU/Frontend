@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/viewRankingFeed"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginVertical="14dp"
+    android:weightSum="2">
+
+    <!-- 왼쪽 카드 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="132dp"
+        android:layout_marginEnd="11dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_round_box"
+        android:backgroundTint="@color/WinnerFit_purple"
+        android:paddingTop="15dp"
+        android:paddingHorizontal="15dp">
+
+        <TextView
+            android:id="@+id/tvUniversityRankLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:text="현재 위너핏대학교는"
+            android:includeFontPadding="false"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:fontFamily="@font/poppins_bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+
+        <TextView
+            android:id="@+id/tvUniversityRankValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:text="1위"
+            android:includeFontPadding="false"
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
+            android:fontFamily="@font/poppins_bold" />
+    </LinearLayout>
+
+    <!-- 오른쪽 카드 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="132dp"
+        android:layout_marginStart="11dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_round_box"
+        android:backgroundTint="@color/WinnerFit_purple"
+        android:paddingTop="15dp"
+        android:paddingHorizontal="15dp">
+
+        <TextView
+            android:id="@+id/tvMajorRankLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:gravity="start|top"
+            android:text="현재 위너핏학과는"
+            android:includeFontPadding="false"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:fontFamily="@font/poppins_bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+
+        <TextView
+            android:id="@+id/tvMajorRankValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:text="999위"
+            android:includeFontPadding="false"
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
+            android:fontFamily="@font/poppins_bold" />
+    </LinearLayout>
+</LinearLayout>
