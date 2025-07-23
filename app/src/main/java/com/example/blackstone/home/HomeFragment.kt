@@ -1,17 +1,21 @@
 import android.annotation.SuppressLint
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.AbsoluteSizeSpan
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.blackstone.R
 import com.example.blackstone.data.MissionItem
+import java.util.Calendar
 
 class HomeFragment : Fragment() {
 
@@ -49,6 +53,10 @@ class HomeFragment : Fragment() {
             majorName = "컴퓨터공학과",
             majorRank = 16
         )
+
+        // 위클리 피드 데이터 반영
+        val recentScores = listOf(1, 0, 2, 4, 3, 4, 1)
+        updateWeeklyFeed(view, recentScores)
     }
 
     private fun updateMissionFeed(view: View, missions: List<MissionItem>) {
@@ -146,5 +154,52 @@ class HomeFragment : Fragment() {
             setSpan(AbsoluteSizeSpan(60, true), 0, length - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         tvMajorRankValue.text = majorSpannable
+    }
+
+    private fun updateWeeklyFeed(view: View, scores: List<Int>) {
+        val daysOfWeek = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+        val todayIndex = Calendar.getInstance().get(Calendar.DAY_OF_WEEK).let { (it + 5) % 7 }
+        val recent7Days = (0..6).map { daysOfWeek[(todayIndex - 6 + it + 7) % 7] }
+
+        val textIds = listOf(
+            R.id.tvDay0, R.id.tvDay1, R.id.tvDay2, R.id.tvDay3,
+            R.id.tvDay4, R.id.tvDay5, R.id.tvDay6
+        )
+        val barIds = listOf(
+            R.id.barDay0, R.id.barDay1, R.id.barDay2, R.id.barDay3,
+            R.id.barDay4, R.id.barDay5, R.id.barDay6
+        )
+
+        val dpHeightMap = mapOf(
+            0 to 0,
+            1 to 25,
+            2 to 50,
+            3 to 75,
+            4 to 100
+        )
+
+        for (i in 0..6) {
+            val tv = view.findViewById<TextView>(textIds[i])
+            val bar = view.findViewById<View>(barIds[i])
+
+            tv.text = recent7Days[i]
+            tv.setTypeface(
+                ResourcesCompat.getFont(view.context,
+                    if (i == 6) R.font.poppins_bold else R.font.poppins_light), Typeface.NORMAL
+            )
+
+            val dp = dpHeightMap[scores.getOrNull(i)?.coerceIn(0, 4) ?: 0] ?: 0
+            val px = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp.toFloat(),
+                view.resources.displayMetrics
+            ).toInt()
+
+            bar.layoutParams.height = px
+            bar.requestLayout()
+        }
+
+        val todayScore = scores.getOrNull(6)?.coerceIn(0, 4) ?: 0
+        view.findViewById<TextView>(R.id.tvMissionLeft).text = "오늘 남은 미션 ${4 - todayScore}개"
     }
 }
