@@ -1,4 +1,3 @@
-import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
@@ -16,6 +15,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.blackstone.R
 import com.example.blackstone.data.MissionItem
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.text.NumberFormat
 import java.util.Calendar
 import java.util.Locale
@@ -45,6 +45,9 @@ class HomeFragment : Fragment() {
 
         // 피드 랜덤 구성 및 나머지 피드 데이터 반영
         addRandomFeeds(view, 1532)
+
+        // 특정 피드 클릭 시 프래그먼트 전환
+        handleFeedClicks(view)
     }
 
     private fun updateHeaderFeed(view: View, dDayCount: Int) {
@@ -268,6 +271,25 @@ class HomeFragment : Fragment() {
                     view, "동국대학교", 7, "컴퓨터공학과", 16
                 )
             }
+        }
+    }
+
+    private fun handleFeedClicks(view: View) {
+        val nav = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+
+        // 미션 피드 → HealthFragment
+        view.findViewById<View>(R.id.viewMissionFeed)?.setOnClickListener {
+            nav?.selectedItemId = R.id.menu_health
+        }
+
+        // 기여도 피드 → RankingFragment
+        view.findViewById<View>(R.id.viewContributionFeed)?.setOnClickListener {
+            nav?.selectedItemId = R.id.menu_ranking
+        }
+
+        // 랭킹 피드 → RankingFragment
+        view.findViewById<View>(R.id.viewRankingFeed)?.setOnClickListener {
+            nav?.selectedItemId = R.id.menu_ranking
         }
     }
 }
