@@ -16,7 +16,7 @@
         android:layout_height="44dp"
         android:background="@drawable/bg_circle"
         android:includeFontPadding="false"
-        android:text="2위"
+        android:text="0위"
         android:textColor="@android:color/white"
         android:textSize="21sp"
         android:fontFamily="@font/poppins_bold"

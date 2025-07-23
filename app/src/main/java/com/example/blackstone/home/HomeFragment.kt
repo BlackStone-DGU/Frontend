@@ -15,7 +15,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.blackstone.R
 import com.example.blackstone.data.MissionItem
+import java.text.NumberFormat
 import java.util.Calendar
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
@@ -28,6 +30,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 헤더 피드 데이터 반영
+        updateHeaderFeed(view, 120)
+
         // 미션 피드 데이터 반영
         val dummyMissions = listOf(
             MissionItem("러닝", 5, "KM", "러닝 5km", completed = 3),
@@ -38,12 +43,10 @@ class HomeFragment : Fragment() {
         updateMissionFeed(view, dummyMissions)
 
         // 티어 피드 데이터 반영
-        val progressPercent = 76
-        updateTierFeed(view, progressPercent)
+        updateTierFeed(view, 76)
 
         // 칼로리 피드 데이터 반영
-        val kcalBurned = 1320
-        updateCalorieFeed(view, kcalBurned)
+        updateCalorieFeed(view, 1320)
 
         // 랭킹 피드 데이터 반영
         updateRankingFeed(
@@ -54,9 +57,32 @@ class HomeFragment : Fragment() {
             majorRank = 16
         )
 
+        // 기여도 피드 데이터 반영
+        updateContributionFeed(
+            view,
+            rank = 7,
+            groupName = "동국대학교",
+            totalScore = 54082,
+            myName = "컴공이",
+            myScore = 432
+        )
+
         // 위클리 피드 데이터 반영
         val recentScores = listOf(1, 0, 2, 4, 3, 4, 1)
         updateWeeklyFeed(view, recentScores)
+    }
+
+    private fun updateHeaderFeed(view: View, dDayCount: Int) {
+        val tvDday = view.findViewById<TextView>(R.id.tvDday)
+        val tvHeaderTitle = view.findViewById<TextView>(R.id.tvHeaderTitle)
+
+        if (dDayCount <= 0) {
+            tvDday.text = "D-0"
+            tvHeaderTitle.text = "오늘부터 달려볼까요?"
+        } else {
+            tvDday.text = "D+$dDayCount"
+            tvHeaderTitle.text = "우리가 달려온 시간"
+        }
     }
 
     private fun updateMissionFeed(view: View, missions: List<MissionItem>) {
@@ -154,6 +180,33 @@ class HomeFragment : Fragment() {
             setSpan(AbsoluteSizeSpan(60, true), 0, length - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         tvMajorRankValue.text = majorSpannable
+    }
+
+    private fun updateContributionFeed(view: View, rank: Int, groupName: String, totalScore: Int, myName: String, myScore: Int) {
+        val tvRank = view.findViewById<TextView>(R.id.tvUniversityRank)
+        val tvGroupName = view.findViewById<TextView>(R.id.tvUniversityName)
+        val tvTotalScore = view.findViewById<TextView>(R.id.tvUniversityTotalScore)
+        val tvUserId = view.findViewById<TextView>(R.id.tvUserId)
+        val tvMyScore = view.findViewById<TextView>(R.id.tvMyScore)
+
+        // 쉼표 단위 포맷
+        val numberFormat = NumberFormat.getNumberInstance(Locale.getDefault())
+        val formattedTotalScore = numberFormat.format(totalScore)
+        val formattedMyScore = numberFormat.format(myScore)
+
+        // 등수 텍스트 및 폰트 크기 조절
+        tvRank.text = "${rank}위"
+        tvRank.textSize = when {
+            rank < 10 -> 21f
+            rank < 100 -> 17f
+            else -> 12f
+        }
+
+        // 값 적용
+        tvGroupName.text = groupName
+        tvTotalScore.text = "${formattedTotalScore}점"
+        tvUserId.text = myName
+        tvMyScore.text = "${formattedMyScore}점"
     }
 
     private fun updateWeeklyFeed(view: View, scores: List<Int>) {
