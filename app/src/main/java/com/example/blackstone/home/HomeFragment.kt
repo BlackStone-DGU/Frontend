@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -42,34 +43,8 @@ class HomeFragment : Fragment() {
         )
         updateMissionFeed(view, dummyMissions)
 
-        // 티어 피드 데이터 반영
-        updateTierFeed(view, 76)
-
-        // 칼로리 피드 데이터 반영
-        updateCalorieFeed(view, 1320)
-
-        // 랭킹 피드 데이터 반영
-        updateRankingFeed(
-            view,
-            universityName = "동국대학교",
-            universityRank = 7,
-            majorName = "컴퓨터공학과",
-            majorRank = 16
-        )
-
-        // 기여도 피드 데이터 반영
-        updateContributionFeed(
-            view,
-            rank = 7,
-            groupName = "동국대학교",
-            totalScore = 54082,
-            myName = "컴공이",
-            myScore = 432
-        )
-
-        // 위클리 피드 데이터 반영
-        val recentScores = listOf(1, 0, 2, 4, 3, 4, 1)
-        updateWeeklyFeed(view, recentScores)
+        // 피드 랜덤 구성 및 나머지 피드 데이터 반영
+        addRandomFeeds(view, 1532)
     }
 
     private fun updateHeaderFeed(view: View, dDayCount: Int) {
@@ -254,5 +229,45 @@ class HomeFragment : Fragment() {
 
         val todayScore = scores.getOrNull(6)?.coerceIn(0, 4) ?: 0
         view.findViewById<TextView>(R.id.tvMissionLeft).text = "오늘 남은 미션 ${4 - todayScore}개"
+    }
+
+    private fun addRandomFeeds(view: View, kcalBurned: Int) {
+        val container = view.findViewById<LinearLayout>(R.id.infoContainer)
+
+        // 피드 레이아웃 리스트
+        val feedLayouts = mutableListOf(
+            R.layout.view_home_tier,
+            R.layout.view_home_weekly,
+            R.layout.view_home_contribution,
+            R.layout.view_home_ranking
+        )
+        if (kcalBurned > 0) {
+            feedLayouts.add(R.layout.view_home_calorie)
+        }
+
+        // 섞기
+        feedLayouts.shuffle()
+
+        // 레이아웃 인플레이트해서 동적 추가
+        val inflater = LayoutInflater.from(view.context)
+        for (layoutRes in feedLayouts) {
+            val feedView = inflater.inflate(layoutRes, container, false)
+            container.addView(feedView)
+        }
+
+        // 값 반영
+        feedLayouts.forEach { layoutRes ->
+            when (layoutRes) {
+                R.layout.view_home_calorie -> updateCalorieFeed(view, kcalBurned)
+                R.layout.view_home_tier -> updateTierFeed(view, 76)
+                R.layout.view_home_weekly -> updateWeeklyFeed(view, listOf(1, 0, 2, 4, 3, 4, 1))
+                R.layout.view_home_contribution -> updateContributionFeed(
+                    view, 7, "동국대학교", 54082, "컴공이", 432
+                )
+                R.layout.view_home_ranking -> updateRankingFeed(
+                    view, "동국대학교", 7, "컴퓨터공학과", 16
+                )
+            }
+        }
     }
 }
