@@ -16,6 +16,7 @@
         <include layout="@layout/view_home_mission" />
         <include layout="@layout/view_home_tier" />
         <include layout="@layout/view_home_calorie" />
+        <include layout="@layout/view_home_contribution" />
         <include layout="@layout/view_home_ranking" />
 
         <LinearLayout
@@ -23,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="14dp"
             android:divider="@android:color/transparent"
             android:showDividers="middle"
             android:dividerPadding="8dp" />
