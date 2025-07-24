@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 헤더 피드 데이터 반영
-        updateHeaderFeed(view, 120)
+        updateHeaderFeed(view,  120, "컴공이")
 
         // 미션 피드 데이터 반영
         val dummyMissions = listOf(
@@ -50,16 +50,19 @@ class HomeFragment : Fragment() {
         handleFeedClicks(view)
     }
 
-    private fun updateHeaderFeed(view: View, dDayCount: Int) {
+    private fun updateHeaderFeed(view: View, dDayCount: Int, userName: String) {
         val tvDday = view.findViewById<TextView>(R.id.tvDday)
         val tvHeaderTitle = view.findViewById<TextView>(R.id.tvHeaderTitle)
+        val ivHeaderIcon = view.findViewById<ImageView>(R.id.ivHeaderIcon)
 
         if (dDayCount <= 0) {
-            tvDday.text = "D-0"
+            tvDday.text = "D-DAY"
             tvHeaderTitle.text = "오늘부터 달려볼까요?"
+            ivHeaderIcon.visibility = View.GONE
         } else {
             tvDday.text = "D+$dDayCount"
-            tvHeaderTitle.text = "우리가 달려온 시간"
+            tvHeaderTitle.text = "${userName} 님이 달려온 시간"
+            ivHeaderIcon.visibility = View.VISIBLE
         }
     }
 

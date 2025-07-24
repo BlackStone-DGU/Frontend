@@ -4,7 +4,8 @@
     android:id="@+id/container"
     android:background="@color/WinnerFit_black"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false">
 
     <!-- 탑바 -->
     <androidx.appcompat.widget.Toolbar
