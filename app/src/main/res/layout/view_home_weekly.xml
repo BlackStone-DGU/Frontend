@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/viewWeeklyFeed"
+    android:layout_width="match_parent"
+    android:layout_height="176dp"
+    android:orientation="vertical"
+    android:backgroundTint="@color/WinnerFit_purple"
+    android:background="@drawable/bg_round_box"
+    android:paddingTop="10dp"
+    android:layout_marginVertical="14dp"
+    android:layout_marginHorizontal="20dp">
+
+    <!-- 상단 텍스트 영역 -->
+    <RelativeLayout
+        android:paddingHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvWeeklyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="최근 7일간 활동"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:fontFamily="@font/poppins_bold" />
+
+        <TextView
+            android:id="@+id/tvMissionLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="오늘 남은 미션 2개"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="2dp"
+            android:textSize="11sp"
+            android:fontFamily="@font/poppins_bold" />
+    </RelativeLayout>
+
+    <!-- 막대 그래프 -->
+    <LinearLayout
+        android:id="@+id/layoutGraph"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- 그래프 바 영역 -->
+        <LinearLayout
+            android:id="@+id/barContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:gravity="bottom"
+            android:weightSum="7">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="bottom|center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/barDay0"
+                    android:layout_width="26dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_weekly_bar" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="bottom|center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/barDay1"
+                    android:layout_width="26dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_weekly_bar" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="bottom|center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/barDay2"
+                    android:layout_width="26dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_weekly_bar" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="bottom|center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/barDay3"
+                    android:layout_width="26dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_weekly_bar" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="bottom|center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/barDay4"
+                    android:layout_width="26dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_weekly_bar" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="bottom|center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/barDay5"
+                    android:layout_width="26dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_weekly_bar" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="bottom|center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/barDay6"
+                    android:layout_width="26dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_weekly_bar" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/WinnerFit_black" />
+
+        <!-- 요일 텍스트 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:gravity="bottom"
+            android:weightSum="7"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="5dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDay0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mon"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_light" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDay1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mon"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_light" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDay2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mon"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_light" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDay3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mon"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_light" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDay4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mon"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_light" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDay5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mon"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_light" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDay6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mon"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
