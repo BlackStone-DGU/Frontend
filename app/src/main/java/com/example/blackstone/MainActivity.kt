@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
             window.setDecorFitsSystemWindows(false)
 
             window.insetsController?.apply {
-                hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
                 setSystemBarsAppearance(
                     0,
                     WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
