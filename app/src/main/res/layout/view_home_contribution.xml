@@ -3,12 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/viewContributionFeed"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_round_box"
-    android:backgroundTint="@color/white"
-    android:layout_marginHorizontal="18dp"
-    android:layout_marginVertical="14dp"
-    android:padding="10dp">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="13dp">
 
     <!-- 등수 원형 -->
     <TextView
@@ -33,7 +30,8 @@
         android:layout_height="wrap_content"
         android:text="위너핏대학교"
         android:textColor="@color/WinnerFit_purple"
-        android:textSize="17sp"
+        android:textSize="20sp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/poppins_bold"
         app:layout_constraintStart_toEndOf="@id/tvUniversityRank"
         app:layout_constraintTop_toTopOf="@id/tvUniversityRank"
@@ -50,7 +48,7 @@
         android:fontFamily="@font/poppins_bold"
         android:text="249점"
         android:textColor="@color/WinnerFit_purple"
-        android:textSize="17sp"
+        android:textSize="20sp"
         android:layout_marginEnd="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvUniversityName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,8 +57,8 @@
     <!-- 내 아이디 및 점수 바 -->
     <LinearLayout
         android:id="@+id/llMyScoreBar"
-        android:layout_width="0dp"
-        android:layout_height="39dp"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
         android:orientation="horizontal"
         android:background="@drawable/bg_contribution_bar"
         android:paddingHorizontal="16dp"
@@ -78,7 +76,7 @@
             android:text="멋진 위너"
             android:includeFontPadding="false"
             android:textColor="@android:color/white"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:fontFamily="@font/poppins_bold" />
 
         <TextView
@@ -88,7 +86,7 @@
             android:text="41점"
             android:includeFontPadding="false"
             android:textColor="@android:color/white"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:fontFamily="@font/poppins_bold" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

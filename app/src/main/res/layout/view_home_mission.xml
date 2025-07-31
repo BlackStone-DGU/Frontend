@@ -46,7 +46,7 @@
                 android:id="@+id/ivMissionIcon1"
                 android:layout_width="67dp"
                 android:layout_height="67dp"
-                android:src="@drawable/ic_run_mission" />
+                android:src="@drawable/ic_squat_mission" />
 
             <TextView
                 android:id="@+id/tvMissionProgress1"
@@ -56,7 +56,7 @@
                 android:textColor="@color/WinnerFit_black"
                 android:textSize="13sp"
                 android:fontFamily="@font/poppins_bold"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="8dp" />
         </LinearLayout>
 
         <!-- 미션 아이템 2 -->
@@ -72,7 +72,7 @@
                 android:id="@+id/ivMissionIcon2"
                 android:layout_width="67dp"
                 android:layout_height="67dp"
-                android:src="@drawable/ic_run_mission" />
+                android:src="@drawable/ic_pushup_mission" />
 
             <TextView
                 android:id="@+id/tvMissionProgress2"
@@ -124,7 +124,7 @@
                 android:id="@+id/ivMissionIcon4"
                 android:layout_width="67dp"
                 android:layout_height="67dp"
-                android:src="@drawable/ic_run_mission" />
+                android:src="@drawable/ic_plank_mission" />
 
             <TextView
                 android:id="@+id/tvMissionProgress4"

@@ -12,19 +12,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- 고정 피드 -->
-        <include layout="@layout/view_home_header" />
+        <include layout="@layout/view_home_slider" />
         <include layout="@layout/view_home_mission" />
+        <include layout="@layout/view_home_weekly" />
+        <include layout="@layout/view_home_tier" />
 
-        <!-- 랜덤 피드가 들어갈 영역 -->
-        <LinearLayout
-            android:id="@+id/infoContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="14dp"
-            android:divider="@android:color/transparent"
-            android:showDividers="middle"
-            android:dividerPadding="8dp" />
     </LinearLayout>
 </ScrollView>
