@@ -11,11 +11,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.example.blackstone.R
 import com.example.blackstone.data.MissionItem
+import com.example.blackstone.home.HeaderPagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import me.relex.circleindicator.CircleIndicator3
 import java.text.NumberFormat
 import java.util.Calendar
 import java.util.Locale
@@ -31,20 +35,19 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 헤더 피드 데이터 반영
-        updateHeaderFeed(view,  120, "컴공이")
-
         // 미션 피드 데이터 반영
         val dummyMissions = listOf(
-            MissionItem("러닝", 5, "KM", "러닝 5km", completed = 3),
-            MissionItem("플랭크", 4, "SET", "플랭크 4세트", completed = 0),
-            MissionItem("스쿼트", 6, "SET", "스쿼트 6세트", completed = 6),
-            MissionItem("푸쉬업", 5, "SET", "푸쉬업 5세트", completed = 1)
+            MissionItem("플랭크", 30, "초", "플랭크 30초", completed = 0),
+            MissionItem("푸쉬업", 15, "개", "푸쉬업 15개", completed = 4),
+            MissionItem("러닝", 3, "km", "러닝 3km", completed = 3),
+            MissionItem("스쿼트", 20, "개", "스쿼트 20개", completed = 15)
         )
         updateMissionFeed(view, dummyMissions)
 
-        // 피드 랜덤 구성 및 나머지 피드 데이터 반영
-        addRandomFeeds(view, 1532)
+        updateWeeklyFeed(view, listOf(1, 0, 2, 4, 3, 4, 1))
+        updateTierFeed(view, 76)
+
+        setupHeaderSlider(view)
 
         // 특정 피드 클릭 시 프래그먼트 전환
         handleFeedClicks(view)
@@ -97,6 +100,25 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun setupHeaderSlider(view: View) {
+        val viewPager = view.findViewById<ViewPager2>(R.id.viewPagerHeader)
+        val indicator = view.findViewById<CircleIndicator3>(R.id.indicator)
+
+        val inflater = LayoutInflater.from(requireContext())
+        val header = inflater.inflate(R.layout.view_home_header, viewPager, false)
+        val contribution = inflater.inflate(R.layout.view_home_contribution, viewPager, false)
+        val calorie = inflater.inflate(R.layout.view_home_calorie, viewPager, false)
+
+        val pages = listOf(header, contribution, calorie)
+
+        viewPager.adapter = HeaderPagerAdapter(pages)
+        indicator.setViewPager(viewPager)
+
+        updateHeaderFeed(header, 120, "컴공이")
+        updateCalorieFeed(calorie, 523)
+        updateContributionFeed(contribution, 7, "동국대학교", 54082, "컴공이", 432)
+    }
+
     private fun updateTierFeed(view: View, progressPercent: Int) {
         val progressView = view.findViewById<View>(R.id.viewTierProgress)
         val tvTierStatus = view.findViewById<TextView>(R.id.tvTierStatus)
@@ -113,29 +135,54 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateCalorieFeed(view: View, kcalBurned: Int) {
-        val weightLossKg = kcalBurned / 7700f
-        val roundedLoss = String.format("%.1f", weightLossKg)
-
         val tvCalorieBurnedText = view.findViewById<TextView>(R.id.tvCalorieBurnedText)
         val tvWeightLossText = view.findViewById<TextView>(R.id.tvWeightLossText)
 
         tvCalorieBurnedText.text = "오늘 하루 동안 ${kcalBurned}kcal 소모하여"
 
-        val unit = "kg"
-        val suffix = "를 감량했어요!"
-        val fullText = "$roundedLoss$unit$suffix"
+        val calorieFoodMap = listOf(
+            80 to "삶은 달걀",
+            150 to "바나나",
+            250 to "컵라면",
+            330 to "초코우유",
+            450 to "순대 국밥",
+            600 to "짜장면",
+            850 to "돈까스",
+            1200 to "피자",
+            1800 to "치킨"
+        )
+
+        val (threshold, food) = calorieFoodMap.lastOrNull { kcalBurned >= it.first } ?: (80 to "삶은 달걀")
+
+        val count = kcalBurned.toFloat() / threshold
+
+        val unit = when (food) {
+            "치킨" -> "마리"
+            "피자" -> "판"
+            else -> "개"
+        }
+
+        val countText = if (food == "삶은 달걀") {
+            String.format("%.1f$unit", count)
+        } else {
+            if (count >= 1.0f) String.format("%.1f$unit", count) else "0$unit"
+        }
+
+        val fullText = "$food $countText 만큼 태웠어요!"
         val spannable = SpannableString(fullText)
 
         spannable.setSpan(
-            AbsoluteSizeSpan(60, true),
+            AbsoluteSizeSpan(45, true),
             0,
-            roundedLoss.length,
+            food.length,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
+
+        val countStart = food.length + 1
         spannable.setSpan(
             AbsoluteSizeSpan(30, true),
-            roundedLoss.length,
-            roundedLoss.length + unit.length,
+            countStart,
+            countStart + countText.length,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
@@ -235,46 +282,6 @@ class HomeFragment : Fragment() {
 
         val todayScore = scores.getOrNull(6)?.coerceIn(0, 4) ?: 0
         view.findViewById<TextView>(R.id.tvMissionLeft).text = "오늘 남은 미션 ${4 - todayScore}개"
-    }
-
-    private fun addRandomFeeds(view: View, kcalBurned: Int) {
-        val container = view.findViewById<LinearLayout>(R.id.infoContainer)
-
-        // 피드 레이아웃 리스트
-        val feedLayouts = mutableListOf(
-            R.layout.view_home_tier,
-            R.layout.view_home_weekly,
-            R.layout.view_home_contribution,
-            R.layout.view_home_ranking
-        )
-        if (kcalBurned > 0) {
-            feedLayouts.add(R.layout.view_home_calorie)
-        }
-
-        // 섞기
-        feedLayouts.shuffle()
-
-        // 레이아웃 인플레이트해서 동적 추가
-        val inflater = LayoutInflater.from(view.context)
-        for (layoutRes in feedLayouts) {
-            val feedView = inflater.inflate(layoutRes, container, false)
-            container.addView(feedView)
-        }
-
-        // 값 반영
-        feedLayouts.forEach { layoutRes ->
-            when (layoutRes) {
-                R.layout.view_home_calorie -> updateCalorieFeed(view, kcalBurned)
-                R.layout.view_home_tier -> updateTierFeed(view, 76)
-                R.layout.view_home_weekly -> updateWeeklyFeed(view, listOf(1, 0, 2, 4, 3, 4, 1))
-                R.layout.view_home_contribution -> updateContributionFeed(
-                    view, 7, "동국대학교", 54082, "컴공이", 432
-                )
-                R.layout.view_home_ranking -> updateRankingFeed(
-                    view, "동국대학교", 7, "컴퓨터공학과", 16
-                )
-            }
-        }
     }
 
     private fun handleFeedClicks(view: View) {

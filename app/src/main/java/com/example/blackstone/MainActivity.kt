@@ -12,6 +12,7 @@ import com.example.blackstone.health.MotionCaptureFragment
 import com.example.blackstone.ranking.RankingFragment
 import HealthFragment
 import HomeFragment
+import com.example.blackstone.shopping.ShoppingFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -64,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_home -> HomeFragment()
             R.id.menu_health -> HealthFragment()
             R.id.menu_ranking -> RankingFragment()
-            R.id.menu_shopping -> MotionCaptureFragment()
+            R.id.menu_shopping -> ShoppingFragment()
             else -> HomeFragment()
         }
 
