@@ -27,7 +27,7 @@ public class HealthFragment : Fragment() {
         // 2. RecyclerView 연결
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerExercise)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = ExerciseAdapter(exerciseList)
+        recyclerView.adapter = ExerciseAdapter(exerciseList, this)
 
         return view
     }
