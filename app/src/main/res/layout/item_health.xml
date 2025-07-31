@@ -42,4 +42,14 @@
         app:layout_constraintEnd_toEndOf="@id/textExerciseName"
         android:layout_marginTop="2dp" />
 
+    <ImageView
+        android:id="@+id/imageArrow"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_arrow_right"
+        android:contentDescription="arrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
