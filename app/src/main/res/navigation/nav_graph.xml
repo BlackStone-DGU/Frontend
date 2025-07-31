@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/healthFragment">
+
+    <fragment
+        android:id="@+id/healthFragment"
+        android:name="com.example.blackstone.health.HealthFragment"
+        android:label="Health">
+        <action
+            android:id="@+id/action_healthFragment_to_healthDetailFragment"
+            app:destination="@id/healthDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/healthDetailFragment"
+        android:name="com.example.blackstone.health.HealthDetailFragment"
+        android:label="Health Detail" />
+
+</navigation>

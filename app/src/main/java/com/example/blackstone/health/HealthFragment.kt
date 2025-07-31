@@ -9,8 +9,7 @@ import com.example.blackstone.health.Exercise
 import com.example.blackstone.health.ExerciseAdapter
 import com.example.blackstone.R
 
-
-class HealthFragment : Fragment() {
+public class HealthFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +27,7 @@ class HealthFragment : Fragment() {
         // 2. RecyclerView 연결
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerExercise)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = ExerciseAdapter(exerciseList)
+        recyclerView.adapter = ExerciseAdapter(exerciseList, this)
 
         return view
     }
