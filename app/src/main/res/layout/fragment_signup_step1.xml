@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#1D1D1D">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/WinnerFit_lightPurple"
+        android:paddingTop="27dp"
+        android:paddingBottom="7dp"
+        android:paddingHorizontal="25dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginBottom="35dp"
+        android:backgroundTintMode="src_in">
+
+        <EditText
+            android:id="@+id/et_id"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="닉네임"
+            android:background="@drawable/bg_rounded"
+            android:backgroundTint="@color/white"
+            android:paddingHorizontal="16dp"
+            android:textSize="15dp"
+            android:textColorHint="#C9C9C9"
+            android:layout_marginBottom="24dp"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/poppins_light" />
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="이메일"
+            android:background="@drawable/bg_rounded"
+            android:backgroundTint="@color/white"
+            android:paddingHorizontal="16dp"
+            android:textSize="15dp"
+            android:inputType="textPassword"
+            android:textColorHint="#C9C9C9"
+            android:layout_marginBottom="24dp"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/poppins_light" />
+
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="비밀번호"
+            android:background="@drawable/bg_rounded_up"
+            android:backgroundTint="@color/white"
+            android:paddingHorizontal="16dp"
+            android:textSize="15dp"
+            android:inputType="textPassword"
+            android:textColorHint="#C9C9C9"
+            android:layout_marginBottom="2dp"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/poppins_light" />
+
+        <EditText
+            android:id="@+id/et_password_check"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="비밀번호 확인"
+            android:background="@drawable/bg_rounded_down"
+            android:backgroundTint="@color/white"
+            android:paddingHorizontal="16dp"
+            android:textSize="15dp"
+            android:inputType="textPassword"
+            android:textColorHint="#C9C9C9"
+            android:layout_marginBottom="13dp"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/poppins_light" />
+
+    </LinearLayout>
+
+
+
+</ScrollView>

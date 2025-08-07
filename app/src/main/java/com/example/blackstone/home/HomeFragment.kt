@@ -164,7 +164,7 @@ class HomeFragment : Fragment() {
         }
 
         // 상태 텍스트 설정
-        tvTierStatus.text = "실버까지 남은 단계 ($progressPercent%)"
+        tvTierStatus.text = "골드까지 남은 단계 ($progressPercent%)"
     }
 
     private fun updateCalorieFeed(view: View, kcalBurned: Int) {
