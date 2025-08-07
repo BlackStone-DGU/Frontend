@@ -68,6 +68,13 @@ public class MotionCaptureFragment extends Fragment {
         if(view instanceof ViewGroup)
             ((ViewGroup) view).addView(overlayView);
 
+        overlayView.setOnRepetitionUpdateListener(new OverlayView.OnRepetitionUpdateListener() {
+            @Override
+            public void onRepetitionUpdate(int count) {
+                // 여기서는 따로 처리하지 않아도 됨 (FragmentResult로 전달됨)
+            }
+        });
+
         analysisExecutor = Executors.newSingleThreadExecutor();
         PoseDetectorOptions options = new PoseDetectorOptions.Builder()
                 .setDetectorMode(PoseDetectorOptions.STREAM_MODE)
