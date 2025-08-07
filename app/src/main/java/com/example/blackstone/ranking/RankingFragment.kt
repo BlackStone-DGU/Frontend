@@ -194,12 +194,12 @@ class RankingFragment : Fragment() {
         val rankingList = if (isSchoolMode) {
             listOf(
                 RankingItem(1, "연세대학교", 234200),
-                RankingItem(2, "동국대학교", 229500),
+                RankingItem(2, "경희대학교", 229500),
                 RankingItem(3, "고려대학교", 224300),
                 RankingItem(4, "성균관대학교", 218900),
                 RankingItem(5, "한양대학교", 214000),
                 RankingItem(6, "중앙대학교", 209800),
-                RankingItem(7, "경희대학교", 205700),
+                RankingItem(7, "동국대학교", 205700, isMyAffiliation = true),
                 RankingItem(8, "이화여자대학교", 201400),
                 RankingItem(9, "한국외국어대학교", 197200),
                 RankingItem(10, "서울시립대학교", 193800),
@@ -219,7 +219,7 @@ class RankingFragment : Fragment() {
                 RankingItem(24, "부산대학교", 152100),
                 RankingItem(25, "전남대학교", 149800),
                 RankingItem(26, "경북대학교", 147300),
-                RankingItem(27, "충남대학교", 144900, isMyAffiliation = true),
+                RankingItem(27, "충남대학교", 144900),
                 RankingItem(28, "전북대학교", 142500),
                 RankingItem(29, "강원대학교", 140200),
                 RankingItem(30, "제주대학교", 137700)

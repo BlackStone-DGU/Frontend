@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
         )
         updateMissionFeed(view, dummyMissions)
 
-        updateWeeklyFeed(view, listOf(1, 0, 2, 4, 3, 4, 1))
+        updateWeeklyFeed(view, listOf(1, 3, 2, 4, 3, 4, 1))
         updateTierFeed(view, 76)
 
         setupHeaderSlider(view)
@@ -149,7 +149,7 @@ class HomeFragment : Fragment() {
 
         updateHeaderFeed(header, 120, "컴공이")
         updateCalorieFeed(calorie, 523)
-        updateContributionFeed(contribution, 7, "동국대학교", 54082, "컴공이", 432)
+        updateContributionFeed(contribution, 7, "동국대학교", 205700, "컴공이", 432)
     }
 
     private fun updateTierFeed(view: View, progressPercent: Int) {
