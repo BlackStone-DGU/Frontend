@@ -7,8 +7,7 @@
     android:layout_marginVertical="14dp"
     android:layout_marginHorizontal="20dp"
     android:paddingHorizontal="15dp"
-    android:backgroundTint="@color/WinnerFit_purple"
-    android:background="@drawable/bg_round_box">
+    android:background="@drawable/bg_border_rounded">
 
     <!-- 왼쪽 아이콘과 텍스트 -->
     <LinearLayout
@@ -16,8 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginBottom="2dp"
-        android:layout_marginEnd="16dp">
+        android:layout_marginEnd="15dp">
 
         <TextView
             android:id="@+id/tvTierLabel"
@@ -30,9 +28,10 @@
 
         <ImageView
             android:id="@+id/ivTierIcon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_star" />
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="-2dp"
+            android:src="@drawable/ic_tier_silver" />
 
     </LinearLayout>
 
@@ -55,7 +54,7 @@
             android:id="@+id/tvTierStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="실버까지 남은 단계 (67%)"
+            android:text="골드 덤벨까지 남은 단계 (67%)"
             android:textSize="11sp"
             android:textColor="@android:color/white"
             android:fontFamily="@font/poppins_bold"

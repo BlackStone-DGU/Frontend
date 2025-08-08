@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/viewContributionFeed"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="13dp">
+
+    <!-- 등수 원형 -->
+    <TextView
+        android:id="@+id/tvUniversityRank"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="@drawable/bg_circle"
+        android:includeFontPadding="false"
+        android:text="0위"
+        android:textColor="@android:color/white"
+        android:textSize="21sp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 대학명 -->
+    <TextView
+        android:id="@+id/tvUniversityName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="위너핏대학교"
+        android:textColor="@color/WinnerFit_purple"
+        android:textSize="20sp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintStart_toEndOf="@id/tvUniversityRank"
+        app:layout_constraintTop_toTopOf="@id/tvUniversityRank"
+        app:layout_constraintBottom_toBottomOf="@id/tvUniversityRank"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintEnd_toStartOf="@id/tvUniversityTotalScore"
+        android:layout_marginStart="12dp" />
+
+    <!-- 대학 총점 -->
+    <TextView
+        android:id="@+id/tvUniversityTotalScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="249점"
+        android:textColor="@color/WinnerFit_purple"
+        android:textSize="20sp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvUniversityName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvUniversityName" />
+
+    <!-- 내 아이디 및 점수 바 -->
+    <LinearLayout
+        android:id="@+id/llMyScoreBar"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_contribution_bar"
+        android:paddingHorizontal="16dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/tvUniversityRank"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp">
+
+        <TextView
+            android:id="@+id/tvUserId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="멋진 위너"
+            android:includeFontPadding="false"
+            android:textColor="@android:color/white"
+            android:textSize="17sp"
+            android:fontFamily="@font/poppins_bold" />
+
+        <TextView
+            android:id="@+id/tvMyScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="41점"
+            android:includeFontPadding="false"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_bold" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
