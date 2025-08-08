@@ -50,7 +50,7 @@
             android:id="@+id/tv_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="000님, 회원가입을 축하합니다!\n오늘도 위너핏과 함께 베네핏\n받고 운동하러 가볼까요?"
+            android:text="컴공이님, 회원가입을 축하합니다!\n오늘도 위너핏과 함께 베네핏\n받고 운동하러 가볼까요?"
             android:gravity="center"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
