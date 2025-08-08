@@ -4,15 +4,14 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
 import com.example.blackstone.databinding.ActivityMainBinding
-import com.example.blackstone.health.MotionCaptureFragment
-import com.example.blackstone.ranking.RankingFragment
-import HealthFragment
 import HomeFragment
+import com.example.blackstone.health.HealthFragment
+import com.example.blackstone.ranking.RankingFragment
 import com.example.blackstone.shopping.ShoppingFragment
+import com.example.yourapp.ui.mypage.MyPageFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +28,13 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             selectTab(it.itemId)
             true
+        }
+
+        binding.toolbarProfile.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView, MyPageFragment())
+                .addToBackStack(null)
+                .commit()
         }
     }
 

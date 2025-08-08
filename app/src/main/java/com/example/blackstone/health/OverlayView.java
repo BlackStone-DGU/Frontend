@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
 
@@ -30,7 +31,18 @@ public class OverlayView extends View {
     Exdata exdata = new Exdata("plank");
     private long startTime = 0;
 
-    public OverlayView(Context context){
+    // ▶リスナー インターフェイス
+    public interface OnRepetitionUpdateListener {
+        void onRepetitionUpdate(int count);
+    }
+
+    private OnRepetitionUpdateListener repetitionListener;
+
+    public void setOnRepetitionUpdateListener(OnRepetitionUpdateListener listener) {
+        this.repetitionListener = listener;
+    }
+
+    public OverlayView(Context context) {
         super(context);
         pointPaint = new Paint();
         pointPaint.setColor(Color.GREEN);
@@ -39,41 +51,40 @@ public class OverlayView extends View {
         textPaint = new Paint();
         textPaint.setColor(Color.WHITE);
         textPaint.setTextSize(80f);
-        textPaint.setShadowLayer(5.0f,0f,0f,Color.BLACK);
+        textPaint.setShadowLayer(5.0f, 0f, 0f, Color.BLACK);
     }
 
     public void setCameraFacing(boolean isFront) {
         isFrontFacing = isFront;
     }
 
-    public void updatePose(Pose pose, int imageWidth, int imageHeight){
+    public void updatePose(Pose pose, int imageWidth, int imageHeight) {
         latestPose = pose;
         sourceImageWidth = imageWidth;
         sourceImageHeight = imageHeight;
 
-        angle = pose==null?-1:calculateAngles(pose);
+        angle = pose == null ? -1 : calculateAngles(pose);
 
         invalidate();
     }
 
-    private double getAngle(PoseLandmark aPoint, PoseLandmark midPoint, PoseLandmark bPoint){
-        if(aPoint==null||midPoint==null||bPoint==null) return -1f;
+    private double getAngle(PoseLandmark aPoint, PoseLandmark midPoint, PoseLandmark bPoint) {
+        if (aPoint == null || midPoint == null || bPoint == null) return -1f;
 
         double res = Math.toDegrees(
-                Math.atan2(bPoint.getPosition().y-midPoint.getPosition().y,
-                        bPoint.getPosition().x-midPoint.getPosition().x)
+                Math.atan2(bPoint.getPosition().y - midPoint.getPosition().y,
+                        bPoint.getPosition().x - midPoint.getPosition().x)
                         -
-                        Math.atan2(aPoint.getPosition().y-midPoint.getPosition().y,
-                                aPoint.getPosition().x-midPoint.getPosition().x)
+                        Math.atan2(aPoint.getPosition().y - midPoint.getPosition().y,
+                                aPoint.getPosition().x - midPoint.getPosition().x)
         );
 
         res = Math.abs(res);
-        if(res>180)
-            res = 360-res;
+        if (res > 180)
+            res = 360 - res;
 
         return res;
     }
-
 
     private double calculateAngles(Pose pose){
         PoseLandmark aPoint = null, midPoint =null, bPoint = null;
@@ -84,7 +95,7 @@ public class OverlayView extends View {
                     midPoint = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE);
                     bPoint = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE);
                     break;
-                case "LeftKnee" :
+                case "LeftKnee":
                     aPoint = pose.getPoseLandmark(PoseLandmark.LEFT_HIP);
                     midPoint = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE);
                     bPoint = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE);
@@ -99,35 +110,35 @@ public class OverlayView extends View {
                     midPoint = pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW);
                     bPoint = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER);
             }
-            double res = getAngle(aPoint,midPoint,bPoint);
-            if(res!=-1) return res;
+            double res = getAngle(aPoint, midPoint, bPoint);
+            if (res != -1) return res;
         }
 
         return -1;
     }
 
-    private void updateTransformationMatrix(){
+    private void updateTransformationMatrix() {
         float viewWidth = getWidth();
         float viewHeight = getHeight();
 
         float scaleFactor = Math.max(
-                viewWidth/(float) sourceImageWidth,
-                viewHeight/(float) sourceImageHeight
+                viewWidth / (float) sourceImageWidth,
+                viewHeight / (float) sourceImageHeight
         );
 
-        float postScaleWidthOffset = (viewWidth-(sourceImageWidth*scaleFactor))/2;
-        float postScaleHeightOffset = (viewHeight-(sourceImageHeight*scaleFactor))/2;
+        float postScaleWidthOffset = (viewWidth - (sourceImageWidth * scaleFactor)) / 2;
+        float postScaleHeightOffset = (viewHeight - (sourceImageHeight * scaleFactor)) / 2;
 
         transformationMatrix.reset();
-        transformationMatrix.postScale(scaleFactor,scaleFactor);
+        transformationMatrix.postScale(scaleFactor, scaleFactor);
         transformationMatrix.postTranslate(postScaleWidthOffset, postScaleHeightOffset);
 
-        if(isFrontFacing)
-            transformationMatrix.postScale(-1f,1f,viewWidth/2f,viewHeight/2f);
+        if (isFrontFacing)
+            transformationMatrix.postScale(-1f, 1f, viewWidth / 2f, viewHeight / 2f);
     }
 
     @Override
-    protected void onDraw(Canvas canvas){
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         if(angle!=-1){
@@ -180,17 +191,15 @@ public class OverlayView extends View {
 
         List<PoseLandmark> allPoseLandmarks = latestPose.getAllPoseLandmarks();
 
-        for(PoseLandmark landmark : allPoseLandmarks){
-            if(landmark.getInFrameLikelihood()>0.5f){
+        for (PoseLandmark landmark : allPoseLandmarks) {
+            if (landmark.getInFrameLikelihood() > 0.5f) {
                 float point[] = new float[]{
                         landmark.getPosition().x,
                         landmark.getPosition().y
                 };
                 transformationMatrix.mapPoints(point);
-                canvas.drawPoint(point[0],point[1],pointPaint);
+                canvas.drawPoint(point[0], point[1], pointPaint);
             }
         }
     }
-
-
 }

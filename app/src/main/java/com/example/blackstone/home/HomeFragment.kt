@@ -16,7 +16,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.blackstone.R
-import com.example.blackstone.data.MissionItem
+import com.example.blackstone.data.Exercise
 import com.example.blackstone.home.HeaderPagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import me.relex.circleindicator.CircleIndicator3
@@ -37,14 +37,30 @@ class HomeFragment : Fragment() {
 
         // 미션 피드 데이터 반영
         val dummyMissions = listOf(
-            MissionItem("플랭크", 30, "초", "플랭크 30초", completed = 0),
-            MissionItem("푸쉬업", 15, "개", "푸쉬업 15개", completed = 4),
-            MissionItem("러닝", 3, "km", "러닝 3km", completed = 3),
-            MissionItem("스쿼트", 20, "개", "스쿼트 20개", completed = 15)
+            Exercise(
+                name = "스쿼트", unit = "개", goal = 20f, current = 0f,
+                description = "스쿼트는 하체 근력과 코어 안정성을 강화하는 대표적인 전신 운동입니다.",
+                imageResId = R.drawable.ic_squat_mission
+            ),
+            Exercise(
+                name = "러닝", unit = "km", goal = 3f, current = 1.2f,
+                description = "러닝은 심폐 기능을 향상시키고 체지방 감량에 효과적인 유산소 운동입니다.",
+                imageResId = R.drawable.ic_run_mission
+            ),
+            Exercise(
+                name = "푸시업", unit = "개", goal = 10f, current = 6f,
+                description = "푸시업은 상체 근력과 코어를 함께 단련할 수 있는 대표적인 맨몸 운동입니다.",
+                imageResId = R.drawable.ic_pushup_mission
+            ),
+            Exercise(
+                name = "플랭크", unit = "초", goal = 60f, current = 60f,
+                description = "플랭크는 코어 안정성과 자세 교정에 효과적인 정적 운동입니다.",
+                imageResId = R.drawable.ic_plank_mission
+            )
         )
         updateMissionFeed(view, dummyMissions)
 
-        updateWeeklyFeed(view, listOf(1, 0, 2, 4, 3, 4, 1))
+        updateWeeklyFeed(view, listOf(1, 3, 2, 4, 3, 4, 1))
         updateTierFeed(view, 76)
 
         setupHeaderSlider(view)
@@ -69,7 +85,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun updateMissionFeed(view: View, missions: List<MissionItem>) {
+    private fun updateMissionFeed(view: View, exercises: List<Exercise>) {
         val tvProgressIds = listOf(
             R.id.tvMissionProgress1,
             R.id.tvMissionProgress2,
@@ -84,18 +100,35 @@ class HomeFragment : Fragment() {
             R.id.ivMissionIcon4
         )
 
-        missions.forEachIndexed { index, mission ->
+        exercises.forEachIndexed { index, exercise ->
             if (index < tvProgressIds.size && index < ivIconIds.size) {
                 val tv = view.findViewById<TextView>(tvProgressIds[index])
                 val iv = view.findViewById<ImageView>(ivIconIds[index])
 
-                val isCompleted = mission.completed >= mission.target
+                val isCompleted = exercise.current >= exercise.goal
 
-                tv.text = if (isCompleted) "완료!" else "${mission.completed}/${mission.target} ${mission.unit}"
+                // 형식: "현재/목표 단위" 또는 "완료!"
+                val currentStr = if (exercise.unit == "km")
+                    String.format("%.1f", exercise.current)
+                else
+                    exercise.current.toInt().toString()
+
+                val goalStr = if (exercise.unit == "km")
+                    String.format("%.1f", exercise.goal)
+                else
+                    exercise.goal.toInt().toString()
+
+                tv.text = if (isCompleted) {
+                    "완료!"
+                } else {
+                    "$currentStr/$goalStr ${exercise.unit}"
+                }
+
                 val alpha = if (isCompleted) 0.5f else 1.0f
-
                 tv.alpha = alpha
                 iv.alpha = alpha
+
+                iv.setImageResource(exercise.imageResId)
             }
         }
     }
@@ -116,7 +149,7 @@ class HomeFragment : Fragment() {
 
         updateHeaderFeed(header, 120, "컴공이")
         updateCalorieFeed(calorie, 523)
-        updateContributionFeed(contribution, 7, "동국대학교", 54082, "컴공이", 432)
+        updateContributionFeed(contribution, 7, "동국대학교", 205700, "컴공이", 432)
     }
 
     private fun updateTierFeed(view: View, progressPercent: Int) {
@@ -131,7 +164,7 @@ class HomeFragment : Fragment() {
         }
 
         // 상태 텍스트 설정
-        tvTierStatus.text = "실버까지 남은 단계 ($progressPercent%)"
+        tvTierStatus.text = "골드까지 남은 단계 ($progressPercent%)"
     }
 
     private fun updateCalorieFeed(view: View, kcalBurned: Int) {
@@ -187,27 +220,6 @@ class HomeFragment : Fragment() {
         )
 
         tvWeightLossText.text = spannable
-    }
-
-    private fun updateRankingFeed(view: View, universityName: String, universityRank: Int, majorName: String, majorRank: Int) {
-        val tvUniversityRankLabel = view.findViewById<TextView>(R.id.tvUniversityRankLabel)
-        val tvUniversityRankValue = view.findViewById<TextView>(R.id.tvUniversityRankValue)
-        val tvMajorRankLabel = view.findViewById<TextView>(R.id.tvMajorRankLabel)
-        val tvMajorRankValue = view.findViewById<TextView>(R.id.tvMajorRankValue)
-
-        // 텍스트 설정
-        tvUniversityRankLabel.text = "현재 ${universityName}는"
-        tvMajorRankLabel.text = "현재 ${majorName}는"
-
-        val universitySpannable = SpannableString("${universityRank}위").apply {
-            setSpan(AbsoluteSizeSpan(60, true), 0, length - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        }
-        tvUniversityRankValue.text = universitySpannable
-
-        val majorSpannable = SpannableString("${majorRank}위").apply {
-            setSpan(AbsoluteSizeSpan(60, true), 0, length - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        }
-        tvMajorRankValue.text = majorSpannable
     }
 
     private fun updateContributionFeed(view: View, rank: Int, groupName: String, totalScore: Int, myName: String, myScore: Int) {

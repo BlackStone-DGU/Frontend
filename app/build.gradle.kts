@@ -56,6 +56,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation ("me.relex:circleindicator:2.1.6")
+
+    implementation ("com.google.android.gms:play-services-maps:18.1.0")
     
     // 카메라 사용 라이브러리
     val camerax_version = "1.3.3"

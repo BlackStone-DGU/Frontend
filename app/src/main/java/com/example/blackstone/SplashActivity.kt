@@ -9,6 +9,8 @@ import android.os.Looper
 import android.view.View
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
+import com.example.blackstone.login.LoginActivity
+import kotlin.jvm.java
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
         setTransparentSystemBars()
 
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }, 1000)
     }
