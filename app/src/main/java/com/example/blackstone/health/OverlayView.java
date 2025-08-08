@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 
 import com.google.mlkit.vision.pose.Pose;
@@ -25,11 +26,10 @@ public class OverlayView extends View {
     private double angle = -1f;
     private int count = 0;
     private int statusCode = 0;
-    private String status[] = {"DOWN", "UP"};
-    String exName = "squat";
-    double upThreshold = 160f;
-    double downThreshold = 70f;
-    String angleName[] = {"RightKnee", "LeftKnee"};
+    private String status[] = {"DOWN","UP"};
+
+    Exdata exdata = new Exdata("plank");
+    private long startTime = 0;
 
     // ▶リスナー インターフェイス
     public interface OnRepetitionUpdateListener {
@@ -86,11 +86,11 @@ public class OverlayView extends View {
         return res;
     }
 
-    private double calculateAngles(Pose pose) {
-        PoseLandmark aPoint = null, midPoint = null, bPoint = null;
-        for (String ang : angleName) {
-            switch (ang) {
-                case "RightKnee":
+    private double calculateAngles(Pose pose){
+        PoseLandmark aPoint = null, midPoint =null, bPoint = null;
+        for(String ang : exdata.angleName){
+            switch(ang){
+                case "RightKnee" :
                     aPoint = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP);
                     midPoint = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE);
                     bPoint = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE);
@@ -100,6 +100,15 @@ public class OverlayView extends View {
                     midPoint = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE);
                     bPoint = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE);
                     break;
+                case "RightElbow" :
+                    aPoint = pose.getPoseLandmark(PoseLandmark.RIGHT_WRIST);
+                    midPoint = pose.getPoseLandmark(PoseLandmark.RIGHT_ELBOW);
+                    bPoint = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER);
+                    break;
+                case "LeftElbow" :
+                    aPoint = pose.getPoseLandmark(PoseLandmark.LEFT_WRIST);
+                    midPoint = pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW);
+                    bPoint = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER);
             }
             double res = getAngle(aPoint, midPoint, bPoint);
             if (res != -1) return res;
@@ -132,33 +141,51 @@ public class OverlayView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (angle != -1) {
-            if (statusCode == 0) {
-                if (angle < downThreshold)
+        if(angle!=-1){
+            if(exdata.exName.equals("plank")){
+                if(angle<exdata.downThreshold) {
+                    if(statusCode==0) {
+                        startTime = SystemClock.elapsedRealtime();
+                        statusCode = 1;
+                    }
+                }
+                else{
+                    startTime = 0;
+                    statusCode = 0;
+                }
+            }
+            else if(statusCode==0){
+                if(angle<exdata.downThreshold)
                     statusCode = 1;
-            } else {
-                if (angle > upThreshold) {
+            }
+            else{
+                if(angle>exdata.upThreshold) {
                     count++;
                     statusCode = 0;
-
-                    if (repetitionListener != null) {
-                        repetitionListener.onRepetitionUpdate(count);
-
-                        // FragmentResult 전달
-                        Bundle result = new Bundle();
-                        result.putInt("repetitionCount", count);
-
-                        if (getContext() instanceof androidx.fragment.app.FragmentActivity) {
-                            androidx.fragment.app.FragmentActivity activity = (androidx.fragment.app.FragmentActivity) getContext();
-                            activity.getSupportFragmentManager()
-                                    .setFragmentResult("repetitionResult", result);
-                        }
-                    }
+                    startTime = 0;
                 }
             }
         }
-
-        if (latestPose == null) return;
+        else{
+            count = 0;
+            statusCode = 0;
+            startTime = 0;
+        }
+        if(exdata.exName.equals("plank")){
+            if(startTime!=0) {
+                canvas.drawText("STAY",50,100,textPaint);
+                canvas.drawText("" + ((SystemClock.elapsedRealtime()-startTime) / 1000), 50, 200, textPaint);
+            }
+            else {
+                canvas.drawText("none",50,100,textPaint);
+                canvas.drawText("0", 50, 200, textPaint);
+            }
+        }
+        else {
+            canvas.drawText(angle==-1?"none":status[statusCode],50,100,textPaint);
+            canvas.drawText("" + count, 50, 200, textPaint);
+        }
+        if(latestPose==null) return;
 
         updateTransformationMatrix();
 
