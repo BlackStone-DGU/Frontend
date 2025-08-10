@@ -2,33 +2,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:layout_marginHorizontal="15dp"
-    android:layout_marginBottom="12dp">
+    android:layout_marginBottom="12dp"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="라벨"
-        android:includeFontPadding="false"
-        android:textColor="@color/WinnerFit_purple"
-        android:textSize="17sp"
+        android:layout_marginBottom="4dp"
         android:fontFamily="@font/poppins_bold"
-        android:layout_marginBottom="4dp" />
+        android:includeFontPadding="false"
+        android:text="라벨"
+        android:textColor="@color/WinnerFit_purple"
+        android:textSize="17sp" />
 
-    <EditText
-        android:id="@+id/et_value"
+    <!-- 값과 단위를 한 박스 안에 -->
+    <LinearLayout
+        android:id="@+id/inputContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:background="@drawable/bg_rounded"
         android:backgroundTint="@color/white"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp"
-        android:textSize="15sp"
-        android:includeFontPadding="false"
+        android:paddingVertical="10dp">
+
+    <EditText
+        android:id="@+id/et_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:hint="정보"
         android:fontFamily="@font/poppins_light"
+        android:includeFontPadding="false"
         android:textColor="#000000"
         android:textColorHint="#000000"
-        android:hint="정보" />
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:textColor="@color/WinnerFit_black"
+        android:fontFamily="@font/poppins_light"
+        android:textSize="15sp"
+        android:visibility="gone" />
 </LinearLayout>
+    </LinearLayout>
