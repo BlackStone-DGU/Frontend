@@ -1,5 +1,6 @@
 package com.example.blackstone.health
 
+import java.util.Locale
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -20,9 +21,11 @@ class HealthDetailFragment : Fragment() {
     private var latestCount: Int = 0
     private lateinit var exercise: Exercise
     private lateinit var clearBox: View
+    private lateinit var textNext: TextView
     private lateinit var btnConfirmClear: View
     private var exerciseIndex: Int = -1
     private var baseCurrentAtStart: Float = 0f
+
 
     companion object {
         private const val ARG_EXERCISE_ID = "arg_exercise_id"
@@ -61,6 +64,7 @@ class HealthDetailFragment : Fragment() {
         // 완료창과 버튼 참조
         clearBox = view.findViewById(R.id.clearBox)
         btnConfirmClear = view.findViewById(R.id.btnConfirmClear)
+        textNext = view.findViewById(R.id.textNext)
 
         // 처음에는 완료창을 감춰 둡니다.
         clearBox.visibility = View.GONE
@@ -157,6 +161,17 @@ class HealthDetailFragment : Fragment() {
 
     }
 
+    private fun buildCompletionTitle(name: String, goal: Float, unit: String): String {
+        val target = if (unit == "km") {
+            String.format(Locale.KOREA, "%.1fkm", goal)
+        } else {
+            "${goal.toInt()}$unit"
+        }
+        return "$name $target"
+    }
+
+
+
     private fun mapExerciseKey(name: String): String {
         return when {
             name.contains("스쿼트") -> "squat"
@@ -171,6 +186,9 @@ class HealthDetailFragment : Fragment() {
         val reached = current + epsilon >= exercise.goal
 
         if (reached) {
+            val doneTitle = buildCompletionTitle(exercise.name, exercise.goal, exercise.unit)
+            textNext.text = "${doneTitle}를 전부 완료했습니다!\n이 기세로 남은 미션도 클리어하러 가볼까요?"
+
             clearBox.visibility = View.VISIBLE
             clearBox.bringToFront()
             clearBox.parent?.let { (it as View).invalidate() }
