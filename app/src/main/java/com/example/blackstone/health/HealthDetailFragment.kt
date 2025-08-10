@@ -115,6 +115,17 @@ class HealthDetailFragment : Fragment() {
             }
         }
 
+        parentFragmentManager.setFragmentResultListener("exerciseUpdated", viewLifecycleOwner) { _, b ->
+            val id = b.getInt("exerciseId", -1)
+            if (id == exerciseIndex) {
+                val updated = ExerciseRepository.getExercise(exerciseIndex) ?: return@setFragmentResultListener
+                view.findViewById<TextView>(R.id.tvExerciseCount)?.let { tv ->
+                    updateExerciseCount(tv, updated.current, updated.goal, updated.unit)
+                }
+                checkAndShowCompletion(updated.current)
+            }
+        }
+
 
         // 운동 이름 상단 바에 표시
         tvTitle.text = exercise.name
@@ -171,12 +182,21 @@ class HealthDetailFragment : Fragment() {
 
 
     private fun updateExerciseCount(tv: TextView, current: Float, goal: Float, unit: String) {
-        val currentStr = if (unit == "km") String.format("%.1f", current) else current.toInt().toString()
-        val goalStr = if (unit == "km") String.format("%.1f", goal) else goal.toInt().toString()
-        val fullText = "$currentStr/$goalStr$unit"
+        val (displayCurrent, displayGoal, displayUnit) =
+            if (unit == "km") {
+                val curM = (current * 1000f).toInt()
+                val goalM = (goal * 1000f).toInt()
+                Triple(curM.toString(), goalM.toString(), "m")
+            } else {
+                val curStr = current.toInt().toString()
+                val goalStr = goal.toInt().toString()
+                Triple(curStr, goalStr, unit)
+            }
+
+        val fullText = "$displayCurrent/$displayGoal$displayUnit"
 
         val spannable = SpannableString(fullText)
-        val unitStart = fullText.indexOf(unit)
+        val unitStart = fullText.indexOf(displayUnit)
         spannable.setSpan(
             AbsoluteSizeSpan(30, true),
             unitStart,

@@ -10,7 +10,7 @@ object ExerciseRepository {
             imageResId = R.drawable.ic_squat_mission
         ),
         Exercise(
-            name = "러닝", unit = "km", goal = 3f, current = 1.2f,
+            name = "러닝", unit = "km", goal = 3f, current = 1.264f,
             description = "러닝은 심폐 기능을 향상시키고 체지방 감량에 효과적인 유산소 운동입니다.",
             imageResId = R.drawable.ic_run_mission
         ),

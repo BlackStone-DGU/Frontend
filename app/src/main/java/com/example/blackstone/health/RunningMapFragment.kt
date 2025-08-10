@@ -12,14 +12,12 @@ import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.blackstone.R
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.location.*
-import com.google.android.gms.location.Priority
-
 
 class RunningMapFragment : Fragment(), OnMapReadyCallback {
 
@@ -28,6 +26,7 @@ class RunningMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
+
     private val MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey"
 
     override fun onCreateView(
@@ -37,59 +36,49 @@ class RunningMapFragment : Fragment(), OnMapReadyCallback {
         val view = inflater.inflate(R.layout.fragment_running_map, container, false)
         mapView = view.findViewById(R.id.mapView)
 
-        var mapViewBundle: Bundle? = null
-        if (savedInstanceState != null) {
-            mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY)
-        }
-        // 지도와 위치 서비스 초기화
+        val mapViewBundle = savedInstanceState?.getBundle(MAP_VIEW_BUNDLE_KEY)
         mapView.onCreate(mapViewBundle)
         mapView.getMapAsync(this)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        // 5초마다 위치 업데이트 요청, 최소 2초 간격
+
+        // 지도 이동용 위치 업데이트(표시 전용)
         locationRequest = LocationRequest.Builder(
             Priority.PRIORITY_HIGH_ACCURACY, 5000L
         ).setMinUpdateIntervalMillis(2000L).build()
 
-        // 위치 업데이트 콜백 – 위치가 바뀔 때마다 카메라를 이동
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(result: LocationResult) {
-                val location = result.lastLocation ?: return
-                val latLng = LatLng(location.latitude, location.longitude)
-                googleMap.animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(latLng, 17f)
-                )
+                val loc = result.lastLocation ?: return
+                val latLng = LatLng(loc.latitude, loc.longitude)
+                // 표시 전용: 카메라만 이동
+                if (::googleMap.isInitialized) {
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
+                }
             }
         }
 
         return view
     }
 
+    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
         googleMap.uiSettings.isMyLocationButtonEnabled = true
         enableMyLocation()
     }
 
-    // 내 위치 레이어를 켜고 위치 업데이트 시작
+    /* 내 위치 레이어 ON + 위치 업데이트 시작(표시 전용) */
+    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     private fun enableMyLocation() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            googleMap.isMyLocationEnabled = true  // 파란 점 및 위치 버튼 표시 [oai_citation:3‡developers.google.com](https://developers.google.com/maps/documentation/android-sdk/examples/my-location#:~:text=%2F,map.setMyLocationEnabled%28true%29%3B%20return)
+        if (hasLocationPermission()) {
+            googleMap.isMyLocationEnabled = true
             fusedLocationClient.requestLocationUpdates(
                 locationRequest,
                 locationCallback,
                 Looper.getMainLooper()
-            )  // 위치 업데이트 시작 [oai_citation:4‡developer.android.com](https://developer.android.com/develop/sensors-and-location/location/request-updates#:~:text=)
+            )
         } else {
-            // 권한 요청 – 거부되면 메시지 표시
             requestPermissions(
                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
@@ -100,7 +89,18 @@ class RunningMapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    // 권한 요청 결과 처리
+    private fun hasLocationPermission(): Boolean {
+        val ctx = requireContext()
+        return ContextCompat.checkSelfPermission(
+            ctx, Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(
+                    ctx, Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    // 권한 결과 처리
+    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
@@ -118,15 +118,7 @@ class RunningMapFragment : Fragment(), OnMapReadyCallback {
     override fun onResume() {
         super.onResume()
         mapView.onResume()
-        // 이미 권한이 있고 맵이 초기화되었으면 위치 업데이트 재개
-        if (::googleMap.isInitialized &&
-            (ContextCompat.checkSelfPermission(
-                requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED ||
-                    ContextCompat.checkSelfPermission(
-                        requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED)
-        ) {
+        if (::googleMap.isInitialized && hasLocationPermission()) {
             fusedLocationClient.requestLocationUpdates(
                 locationRequest, locationCallback, Looper.getMainLooper()
             )
@@ -136,7 +128,6 @@ class RunningMapFragment : Fragment(), OnMapReadyCallback {
     override fun onPause() {
         super.onPause()
         mapView.onPause()
-        // 프래그먼트가 비활성화되면 업데이트 중지해 배터리 절약 [oai_citation:5‡developer.android.com](https://developer.android.com/develop/sensors-and-location/location/request-updates#:~:text=removeLocationUpdates,in%20the%20following%20code%20sample)
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
