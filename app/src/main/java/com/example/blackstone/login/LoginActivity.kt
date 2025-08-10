@@ -1,9 +1,13 @@
 package com.example.blackstone.login
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import com.example.blackstone.MainActivity
+import com.example.blackstone.R
 import com.example.blackstone.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -13,8 +17,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        window.statusBarColor = ContextCompat.getColor(this, R.color.WinnerFit_black)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.WinnerFit_black)
+
         // ViewBinding 설정
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContentView(binding.root)
 
         // 로그인 버튼 클릭 → 메인화면 이동
