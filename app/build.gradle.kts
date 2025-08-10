@@ -55,6 +55,14 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation ("com.squareup.retrofit2:converter-scalars:2.11.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
+
     implementation ("me.relex:circleindicator:2.1.6")
 
     implementation ("com.google.android.gms:play-services-maps:18.1.0")
