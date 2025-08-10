@@ -20,6 +20,7 @@ public class OverlayView extends View {
     private final Paint pointPaint, textPaint;
     private int sourceImageWidth = 1;
     private int sourceImageHeight = 1;
+    private long lastEmittedSecond = 0;
     private boolean isFrontFacing = false;
     private final Matrix transformationMatrix = new Matrix();
 
@@ -31,9 +32,27 @@ public class OverlayView extends View {
     Exdata exdata = new Exdata("plank");
     private long startTime = 0;
 
-    // ▶リスナー インターフェイス
+
+    public void setExercise(String name) {
+        // 한글 -> 내부 키 매핑
+        String key = name;
+        if ("스쿼트".equalsIgnoreCase(name)) key = "squat";
+        else if ("푸시업".equalsIgnoreCase(name)) key = "pushUp";
+        else if ("플랭크".equalsIgnoreCase(name)) key = "plank";
+
+        exdata = new Exdata(key);
+
+        // 상태 리셋
+        count = 0;
+        statusCode = 0;
+        startTime = 0;
+        lastEmittedSecond = 0;
+        angle = -1f;
+        invalidate();
+    }
+
     public interface OnRepetitionUpdateListener {
-        void onRepetitionUpdate(int count);
+        void onRepetitionDelta(int delta);
     }
 
     private OnRepetitionUpdateListener repetitionListener;
@@ -141,51 +160,52 @@ public class OverlayView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if(angle!=-1){
-            if(exdata.exName.equals("plank")){
-                if(angle<exdata.downThreshold) {
-                    if(statusCode==0) {
+        if (angle != -1) {
+            if (exdata.exName.equals("plank")) {
+                if (angle < exdata.downThreshold) {
+                    if (statusCode == 0) {
                         startTime = SystemClock.elapsedRealtime();
                         statusCode = 1;
+                        lastEmittedSecond = 0;
                     }
-                }
-                else{
+                } else {
                     startTime = 0;
                     statusCode = 0;
+                    lastEmittedSecond = 0;
                 }
-            }
-            else if(statusCode==0){
-                if(angle<exdata.downThreshold)
-                    statusCode = 1;
-            }
-            else{
-                if(angle>exdata.upThreshold) {
+            } else if (statusCode == 0) {
+                if (angle < exdata.downThreshold) statusCode = 1;
+            } else {
+                if (angle > exdata.upThreshold) {
                     count++;
                     statusCode = 0;
                     startTime = 0;
+
+                    // ✅ 1회 증가 → 델타 1 전송
+                    if (repetitionListener != null) {
+                        repetitionListener.onRepetitionDelta(1);
+                    }
                 }
             }
-        }
-        else{
+        } else {
             count = 0;
             statusCode = 0;
             startTime = 0;
+            lastEmittedSecond = 0;
         }
-        if(exdata.exName.equals("plank")){
-            if(startTime!=0) {
-                canvas.drawText("STAY",50,100,textPaint);
-                canvas.drawText("" + ((SystemClock.elapsedRealtime()-startTime) / 1000), 50, 200, textPaint);
+
+        if (exdata.exName.equals("plank")) {
+            if (startTime != 0) {
+                long elapsedSec = (SystemClock.elapsedRealtime() - startTime) / 1000;
+                while (elapsedSec > lastEmittedSecond) {
+                    lastEmittedSecond++;
+                    if (repetitionListener != null) {
+                        repetitionListener.onRepetitionDelta(1);
+                    }
+                }
             }
-            else {
-                canvas.drawText("none",50,100,textPaint);
-                canvas.drawText("0", 50, 200, textPaint);
-            }
         }
-        else {
-            canvas.drawText(angle==-1?"none":status[statusCode],50,100,textPaint);
-            canvas.drawText("" + count, 50, 200, textPaint);
-        }
-        if(latestPose==null) return;
+        if (latestPose == null) return;
 
         updateTransformationMatrix();
 

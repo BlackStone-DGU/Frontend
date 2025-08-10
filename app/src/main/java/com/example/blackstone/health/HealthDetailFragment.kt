@@ -22,6 +22,7 @@ class HealthDetailFragment : Fragment() {
     private lateinit var clearBox: View
     private lateinit var btnConfirmClear: View
     private var exerciseIndex: Int = -1
+    private var baseCurrentAtStart: Float = 0f
 
     companion object {
         private const val ARG_EXERCISE_ID = "arg_exercise_id"
@@ -97,11 +98,23 @@ class HealthDetailFragment : Fragment() {
             btnConfirmWarning.setOnClickListener {
                 warningBox.visibility = View.GONE
 
+                baseCurrentAtStart = ExerciseRepository.getExercise(exerciseIndex)?.current ?: exercise.current
+
+                val mc = MotionCaptureFragment().apply {
+                    arguments = Bundle().apply {
+                        putString("ex_name", mapExerciseKey(exercise.name))
+                    }
+                }
+
                 childFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerInner, MotionCaptureFragment())
+                    .replace(R.id.fragmentContainerInner, mc)
                     .commit()
+
+                clearBox.bringToFront()
+                clearBox.parent?.let { (it as View).invalidate() }
             }
         }
+
 
         // 운동 이름 상단 바에 표시
         tvTitle.text = exercise.name
@@ -109,21 +122,48 @@ class HealthDetailFragment : Fragment() {
         updateExerciseCount(tvCount, exercise.current, exercise.goal, exercise.unit)
         checkAndShowCompletion(exercise.current)
 
-        parentFragmentManager.setFragmentResultListener("repetitionResult", viewLifecycleOwner) { _, bundle ->
-            val count = bundle.getInt("repetitionCount", 0)
-            latestCount = count
 
-            ExerciseRepository.updateCurrent(exerciseIndex, count.toFloat())
-            updateExerciseCount(tvCount, count.toFloat(), exercise.goal, exercise.unit)
-            checkAndShowCompletion(count.toFloat())
+        childFragmentManager.setFragmentResultListener("repetitionResult", viewLifecycleOwner) { _, bundle ->
+            val delta = bundle.getInt("repetitionDelta", 0)
+            if (delta != 0) {
+                // 현재 저장된 값에 델타 누적
+                val currentStored = ExerciseRepository.getExercise(exerciseIndex)?.current ?: exercise.current
+                val newCurrent = currentStored + delta
+
+                ExerciseRepository.updateCurrent(exerciseIndex, newCurrent)
+                latestCount = (latestCount + delta) // 화면 복귀 시 재표시용 내부 캐시도 증가
+
+                // UI 갱신
+                view.findViewById<TextView>(R.id.tvExerciseCount)?.let { tv ->
+                    updateExerciseCount(tv, newCurrent, exercise.goal, exercise.unit)
+                }
+                checkAndShowCompletion(newCurrent)
+                if (clearBox.visibility == View.VISIBLE) {
+                    clearBox.bringToFront()
+                }
+            }
         }
 
     }
 
-    private fun checkAndShowCompletion(current: Float) {
+    private fun mapExerciseKey(name: String): String {
+        return when {
+            name.contains("스쿼트") -> "squat"
+            name.contains("푸시업")  -> "pushUp"
+            name.contains("플랭크") -> "plank"
+            else -> "plank" // 기본값
+        }
+    }
 
-        if (current >= exercise.goal) {
+    private fun checkAndShowCompletion(current: Float) {
+        val epsilon = 1e-3f
+        val reached = current + epsilon >= exercise.goal
+
+        if (reached) {
             clearBox.visibility = View.VISIBLE
+            clearBox.bringToFront()
+            clearBox.parent?.let { (it as View).invalidate() }
+            clearBox.requestLayout()
         } else {
             clearBox.visibility = View.GONE
         }

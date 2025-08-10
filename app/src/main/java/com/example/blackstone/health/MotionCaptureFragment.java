@@ -45,6 +45,14 @@ public class MotionCaptureFragment extends Fragment {
     private int cam[] = {CameraSelector.LENS_FACING_BACK, CameraSelector.LENS_FACING_FRONT};
     private int camCode = 0;
 
+    public static MotionCaptureFragment newInstance(String exerciseName) {
+        MotionCaptureFragment f = new MotionCaptureFragment();
+        Bundle b = new Bundle();
+        b.putString("ex_name", exerciseName);
+        f.setArguments(b);
+        return f;
+    }
+
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if(isGranted)
@@ -60,36 +68,46 @@ public class MotionCaptureFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        super.onViewCreated(view,savedInstanceState);
+        super.onViewCreated(view, savedInstanceState);
+
+        // 운동 이름 추출
+        String exName = "plank";
+        Bundle args = getArguments();
+        if (args != null) {
+            exName = args.getString("ex_name", "plank");
+        }
+
+        // 뷰 초기화 + OverlayView 생성/부착 (순서 중요)
         viewFinder = view.findViewById(R.id.viewFinder);
         overlayView = new OverlayView(requireContext());
         ImageButton switchButton = view.findViewById(R.id.camera_switch_button);
 
-        if(view instanceof ViewGroup)
+        if (view instanceof ViewGroup) {
             ((ViewGroup) view).addView(overlayView);
+        }
 
-        overlayView.setOnRepetitionUpdateListener(new OverlayView.OnRepetitionUpdateListener() {
-            @Override
-            public void onRepetitionUpdate(int count) {
-                // 여기서는 따로 처리하지 않아도 됨 (FragmentResult로 전달됨)
-            }
+        // 여기서 운동 세팅 (overlayView 생성 후!)
+        overlayView.setExercise(exName);
+
+        // 카운트 증가할 때마다 디테일로 중계
+        overlayView.setOnRepetitionUpdateListener(delta -> {
+            Bundle result = new Bundle();
+            result.putInt("repetitionDelta", delta);
+            getParentFragmentManager().setFragmentResult("repetitionResult", result);
         });
-
         analysisExecutor = Executors.newSingleThreadExecutor();
         PoseDetectorOptions options = new PoseDetectorOptions.Builder()
                 .setDetectorMode(PoseDetectorOptions.STREAM_MODE)
                 .build();
         poseDetector = PoseDetection.getClient(options);
 
-        switchButton.setOnClickListener(v->{
-            camCode = (camCode+1)%2;
+        switchButton.setOnClickListener(v -> {
+            camCode = (camCode + 1) % 2;
             startCamera();
         });
 
-        if(allPermissionsGranted())
-            startCamera();
-        else
-            requestPermissionLauncher.launch((Manifest.permission.CAMERA));
+        if (allPermissionsGranted()) startCamera();
+        else requestPermissionLauncher.launch((Manifest.permission.CAMERA));
     }
 
     private boolean allPermissionsGranted(){

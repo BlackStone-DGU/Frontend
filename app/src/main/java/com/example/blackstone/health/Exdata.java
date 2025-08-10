@@ -24,6 +24,12 @@ public class Exdata {
                 upThreshold = 160f;
                 downThreshold = 90f;
                 angleName = new String[]{"RightElbow", "LeftElbow"};
+                break;
+            default:
+                upThreshold = 160f;
+                downThreshold = 90f;
+                angleName = new String[]{"RightElbow", "LeftElbow"};
+                break;
         }
     }
 }
