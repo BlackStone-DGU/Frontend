@@ -17,12 +17,14 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.blackstone.R
 import com.example.blackstone.data.Exercise
+import com.example.blackstone.data.ExerciseRepository
 import com.example.blackstone.home.HeaderPagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import me.relex.circleindicator.CircleIndicator3
 import java.text.NumberFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {
 
@@ -35,35 +37,26 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 미션 피드 데이터 반영
-        val dummyMissions = listOf(
-            Exercise(
-                name = "스쿼트", unit = "개", goal = 20f, current = 0f,
-                description = "스쿼트는 하체 근력과 코어 안정성을 강화하는 대표적인 전신 운동입니다.",
-                imageResId = R.drawable.ic_squat_mission
-            ),
-            Exercise(
-                name = "러닝", unit = "km", goal = 3f, current = 1.2f,
-                description = "러닝은 심폐 기능을 향상시키고 체지방 감량에 효과적인 유산소 운동입니다.",
-                imageResId = R.drawable.ic_run_mission
-            ),
-            Exercise(
-                name = "푸시업", unit = "개", goal = 10f, current = 6f,
-                description = "푸시업은 상체 근력과 코어를 함께 단련할 수 있는 대표적인 맨몸 운동입니다.",
-                imageResId = R.drawable.ic_pushup_mission
-            ),
-            Exercise(
-                name = "플랭크", unit = "초", goal = 60f, current = 60f,
-                description = "플랭크는 코어 안정성과 자세 교정에 효과적인 정적 운동입니다.",
-                imageResId = R.drawable.ic_plank_mission
-            )
-        )
-        updateMissionFeed(view, dummyMissions)
+        val exercises = ExerciseRepository.getExercises()
 
-        updateWeeklyFeed(view, listOf(1, 3, 2, 4, 3, 4, 1))
-        updateTierFeed(view, 76)
+        // 미션 피드
+        updateMissionFeed(view, exercises)
 
-        setupHeaderSlider(view)
+        // 완료된 운동 수
+        val completedCount = exercises.count { it.current >= it.goal }
+        val dummyWeeklyScores = listOf(1, 3, 2, 4, 3, 4)
+        val todayScore = completedCount.coerceIn(0, 4)
+
+        // 위클리 피드
+        updateWeeklyFeed(view, dummyWeeklyScores + todayScore)
+
+        // 티어 피드
+        val tierProgress = (76 + completedCount * 2).coerceAtMost(100)
+        updateTierFeed(view, tierProgress)
+
+        // 헤더 슬라이더: 칼로리와 공헌도 업데이트
+        setupHeaderSlider(view, exercises, completedCount)
+
 
         // 특정 피드 클릭 시 프래그먼트 전환
         handleFeedClicks(view)
@@ -133,7 +126,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupHeaderSlider(view: View) {
+    private fun setupHeaderSlider(view: View, exercises: List<Exercise>, completedCount: Int) {
         val viewPager = view.findViewById<ViewPager2>(R.id.viewPagerHeader)
         val indicator = view.findViewById<CircleIndicator3>(R.id.indicator)
 
@@ -148,9 +141,28 @@ class HomeFragment : Fragment() {
         indicator.setViewPager(viewPager)
 
         updateHeaderFeed(header, 120, "컴공이")
-        updateCalorieFeed(calorie, 523)
-        updateContributionFeed(contribution, 7, "동국대학교", 205700, "컴공이", 432)
+
+        val totalCalories = exercises.sumOf { calculateCaloriesBurned(it) }
+        updateCalorieFeed(calorie, totalCalories.roundToInt())
+
+        val updatedMyScore = 432 + completedCount * 3
+        updateContributionFeed(contribution, 7, "동국대학교", 205700, "컴공이", updatedMyScore)
     }
+
+    private fun calculateCaloriesBurned(exercise: Exercise): Double =
+        when (exercise.unit) {
+            "개" -> {
+                val perRep = when {
+                    exercise.name.contains("스쿼트") -> 0.38
+                    exercise.name.contains("푸시업") -> 7.0 / 20.0
+                    else -> 0.3
+                }
+                exercise.current * perRep
+            }
+            "초" -> exercise.current * (3.5 / 60.0)
+            "km" -> exercise.current * 60.0
+            else -> 0.0
+        }
 
     private fun updateTierFeed(view: View, progressPercent: Int) {
         val progressView = view.findViewById<View>(R.id.viewTierProgress)
@@ -231,8 +243,9 @@ class HomeFragment : Fragment() {
 
         // 쉼표 단위 포맷
         val numberFormat = NumberFormat.getNumberInstance(Locale.getDefault())
-        val formattedTotalScore = numberFormat.format(totalScore)
         val formattedMyScore = numberFormat.format(myScore)
+        val totalPlusMy = totalScore + myScore
+        val formattedTotalPlusMy = numberFormat.format(totalPlusMy)
 
         // 등수 텍스트 및 폰트 크기 조절
         tvRank.text = "${rank}위"
@@ -244,7 +257,7 @@ class HomeFragment : Fragment() {
 
         // 값 적용
         tvGroupName.text = groupName
-        tvTotalScore.text = "${formattedTotalScore}점"
+        tvTotalScore.text = "${formattedTotalPlusMy}점" //
         tvUserId.text = myName
         tvMyScore.text = "${formattedMyScore}점"
     }

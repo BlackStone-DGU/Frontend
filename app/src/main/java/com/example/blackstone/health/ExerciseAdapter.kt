@@ -74,7 +74,8 @@ class ExerciseAdapter(
 
         // 상세 이동
         holder.healthFeed.setOnClickListener {
-            val detailFragment = HealthDetailFragment.newInstance(exercise)
+            val exerciseId = position
+            val detailFragment = HealthDetailFragment.newInstance(exerciseId)
             parentFragment.parentFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerView, detailFragment)
                 .addToBackStack(null)
