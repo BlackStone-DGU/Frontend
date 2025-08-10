@@ -181,6 +181,7 @@
                     android:layout_gravity="center_horizontal" />
 
                 <TextView
+                    android:id="@+id/textNext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="스쿼트 20개를 전부 완료했습니다!\n이 기세로 남은 미션도 클리어하러 가볼까요?"
