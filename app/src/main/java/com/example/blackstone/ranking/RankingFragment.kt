@@ -199,7 +199,7 @@ class RankingFragment : Fragment() {
                 RankingItem(4, "성균관대학교", 218900),
                 RankingItem(5, "한양대학교", 214000),
                 RankingItem(6, "중앙대학교", 209800),
-                RankingItem(7, "동국대학교", 205700, isMyAffiliation = true),
+                RankingItem(7, "동국대학교", 206132, isMyAffiliation = true),
                 RankingItem(8, "이화여자대학교", 201400),
                 RankingItem(9, "한국외국어대학교", 197200),
                 RankingItem(10, "서울시립대학교", 193800),

@@ -39,18 +39,63 @@ class MyPageFragment : Fragment() {
     }
 
     // ▶ 라벨 + 값 세팅 함수
-    private fun setInputFromInclude(parentView: View, includeId: Int, label: String, value: String) {
+    private fun setInputFromInclude(
+        parentView: View,
+        includeId: Int,
+        label: String,
+        rawValue: String
+    ) {
         val includeView = parentView.findViewById<View>(includeId)
         val inputBinding = ViewProfileInputBinding.bind(includeView)
+
         inputBinding.tvLabel.text = label
-        inputBinding.etValue.setText(value)
+
+        // 라벨에 따른 단위 선택
+        val unit = when (label) {
+            "키" -> "cm"
+            "몸무게" -> "kg"
+            else -> ""
+        }
+
+        // 값에서 숫자와 단위 분리
+        val (numberValue, valueUnit) = splitNumberAndUnit(rawValue)
+
+        // EditText에는 숫자만 설정
+        inputBinding.etValue.setText(numberValue)
+
+        // 라벨이 지정한 단위가 있으면 tv_unit 표시, 없으면 GONE
+        if (unit.isNotEmpty()) {
+            inputBinding.tvUnit.text = unit
+            inputBinding.tvUnit.visibility = View.VISIBLE
+        } else {
+            // rawValue에 이미 붙어 있는 단위(예: "83kg")가 있다면 그것도 표시
+            if (valueUnit.isNotEmpty()) {
+                inputBinding.tvUnit.text = valueUnit
+                inputBinding.tvUnit.visibility = View.VISIBLE
+            } else {
+                inputBinding.tvUnit.visibility = View.GONE
+            }
+        }
     }
+
+    // "178cm" 같은 문자열을 숫자 부분과 단위 부분으로 분리
+    private fun splitNumberAndUnit(value: String): Pair<String, String> {
+        val match = Regex("^([0-9]+(?:\\.[0-9]+)?)(.*)$").matchEntire(value.trim())
+        return if (match != null) {
+            val numberPart = match.groupValues[1]
+            val unitPart = match.groupValues[2].trim()
+            numberPart to unitPart
+        } else {
+            value to ""
+        }
+    }
+
 
     private fun setProfileData() {
         setInputFromInclude(binding.root, R.id.input_nickname, "닉네임", "컴공이")
         setInputFromInclude(binding.root, R.id.input_email, "이메일", "winnerfit@example.com")
-        setInputFromInclude(binding.root, R.id.input_weight, "몸무게", "83kg")
-        setInputFromInclude(binding.root, R.id.input_height, "키", "178cm")
+        setInputFromInclude(binding.root, R.id.input_weight, "몸무게", "83")
+        setInputFromInclude(binding.root, R.id.input_height, "키", "178")
         setInputFromInclude(binding.root, R.id.input_gender, "성별", "남자")
         setInputFromInclude(binding.root, R.id.input_birth, "생년월일", "20060412")
     }
@@ -75,10 +120,19 @@ class MyPageFragment : Fragment() {
     private fun setEditable(parentView: View, includeId: Int, editable: Boolean) {
         val includeView = parentView.findViewById<View>(includeId)
         val inputBinding = ViewProfileInputBinding.bind(includeView)
-        inputBinding.etValue.isEnabled = editable
-        inputBinding.etValue.alpha = if (editable) 1f else 0.7f
-    }
 
+        // EditText와 유닛의 입력 가능 여부
+        inputBinding.etValue.isEnabled = editable
+
+        // 컨테이너 전체도 같은 상태가 되도록
+        inputBinding.inputContainer.isEnabled = editable
+
+        // alpha 값으로 밝기 조절
+        val alpha = if (editable) 1f else 0.7f
+        inputBinding.inputContainer.alpha = alpha
+        inputBinding.etValue.alpha = alpha
+        inputBinding.tvUnit.alpha = alpha
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

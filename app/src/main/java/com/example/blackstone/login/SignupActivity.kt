@@ -3,6 +3,8 @@ package com.example.blackstone.login
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.example.blackstone.R
 import com.example.blackstone.databinding.ActivitySignupBinding
 
 class SignupActivity : AppCompatActivity() {
@@ -12,6 +14,10 @@ class SignupActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.WinnerFit_black)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.WinnerFit_black)
+
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

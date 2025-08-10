@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:text="계정을 잊으셨나요?"
                     android:fontFamily="@font/poppins_bold"
-                    app:tint="@color/WinnerFit_black"
+                    android:textColor="@color/WinnerFit_black"
                     android:textSize="12sp" />
 
                 <ImageView
