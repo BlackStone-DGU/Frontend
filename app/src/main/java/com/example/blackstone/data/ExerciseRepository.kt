@@ -5,7 +5,7 @@ import com.example.blackstone.R
 object ExerciseRepository {
     private val exercises = mutableListOf(
         Exercise(
-            name = "스쿼트", unit = "개", goal = 20f, current = 0f,
+            name = "스쿼트", unit = "개", goal = 20f, current = 14f,
             description = "스쿼트는 하체 근력과 코어 안정성을 강화하는 대표적인 전신 운동입니다.",
             imageResId = R.drawable.ic_squat_mission
         ),

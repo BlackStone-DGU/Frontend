@@ -44,5 +44,5 @@
         android:src="@drawable/ic_run"
         app:layout_constraintBottom_toBottomOf="@+id/tvDday"
         app:layout_constraintStart_toEndOf="@+id/tvDday"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/tvDday" />
 </androidx.constraintlayout.widget.ConstraintLayout>
