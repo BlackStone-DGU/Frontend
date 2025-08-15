@@ -19,6 +19,21 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="23dp" />
 
+    <TextView
+        android:id="@+id/tvCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1,450"
+        android:textColor="@color/WinnerFit_lightPurple"
+        android:textSize="19sp"
+        android:fontFamily="@font/poppins_medium"
+        android:drawableEnd="@drawable/ic_coin"
+        android:includeFontPadding="false"
+        android:drawablePadding="5dp"
+        android:layout_marginEnd="23dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvTitle"/>
+
     <!-- 카드 뷰 박스 -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/shoppingBox"
@@ -32,21 +47,15 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp">
 
-            <!-- 안내 문구 -->
-            <TextView
-                android:id="@+id/tvMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="곧 멋진 아이템들이\n이 자리를 채울 예정이에요!"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textAlignment="center"
-                android:gravity="center"
-                android:fontFamily="@font/poppins_bold"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+        <include
+            android:id="@+id/itemWinnerShield"
+            layout="@layout/view_shop_item_winner_shield"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

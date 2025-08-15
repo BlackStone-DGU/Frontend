@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+        app:cardCornerRadius="20dp"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="8dp">
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 제목 -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="구매 확인"
+                android:gravity="center"
+                android:layout_marginTop="9dp"
+                android:textColor="@color/WinnerFit_black"
+                android:textSize="24sp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/poppins_bold" />
+
+            <!-- 본문 -->
+            <TextView
+                android:id="@+id/tvMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:layout_marginBottom="19dp"
+                android:gravity="center"
+                android:text="정말 위너 쉴드를 구매하시겠어요?\n구매 후에는 취소할 수 없습니다."
+                android:textColor="@color/WinnerFit_black"
+                android:textSize="12sp"
+                android:lineSpacingExtra="2dp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/poppins_light" />
+
+            <!-- 상단 가로 구분선 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DBDBDB" />
+
+            <!-- 하단 액션 영역 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btnCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="취소"
+                    android:textColor="@color/WinnerFit_black"
+                    android:includeFontPadding="false"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:background="?attr/selectableItemBackground" />
+
+                <!-- 세로 구분선 -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#DBDBDB" />
+
+                <TextView
+                    android:id="@+id/btnConfirm"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="구매하기"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/WinnerFit_black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:background="?attr/selectableItemBackground" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>
