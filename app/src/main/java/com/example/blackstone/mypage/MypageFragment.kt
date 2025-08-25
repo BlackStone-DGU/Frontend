@@ -94,10 +94,10 @@ class MyPageFragment : Fragment() {
     private fun setProfileData() {
         setInputFromInclude(binding.root, R.id.input_nickname, "닉네임", "컴공이")
         setInputFromInclude(binding.root, R.id.input_email, "이메일", "winnerfit@example.com")
-        setInputFromInclude(binding.root, R.id.input_weight, "몸무게", "83")
-        setInputFromInclude(binding.root, R.id.input_height, "키", "178")
-        setInputFromInclude(binding.root, R.id.input_gender, "성별", "남자")
-        setInputFromInclude(binding.root, R.id.input_birth, "생년월일", "20060412")
+        setInputFromInclude(binding.root, R.id.input_weight, "몸무게", "50.2")
+        setInputFromInclude(binding.root, R.id.input_height, "키", "158")
+        setInputFromInclude(binding.root, R.id.input_gender, "성별", "여자")
+        setInputFromInclude(binding.root, R.id.input_birth, "생년월일", "20051024")
     }
 
     // ▶ 편집모드 토글 함수

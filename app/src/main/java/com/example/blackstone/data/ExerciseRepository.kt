@@ -15,7 +15,7 @@ object ExerciseRepository {
             imageResId = R.drawable.ic_run_mission
         ),
         Exercise(
-            name = "푸시업", unit = "개", goal = 10f, current = 6f,
+            name = "푸시업", unit = "개", goal = 10f, current = 7f,
             description = "푸시업은 상체 근력과 코어를 함께 단련할 수 있는 대표적인 맨몸 운동입니다.",
             imageResId = R.drawable.ic_pushup_mission
         ),
